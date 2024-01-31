@@ -1,10 +1,8 @@
 import React from "react";
 // import Logo from "../../assets/logo.png";
 import Img5 from "../../assets/women/download.png";
-
 import { IoMdSearch } from "react-icons/io";
 import { FaCartShopping } from "react-icons/fa6";
-import { FaCaretDown } from "react-icons/fa";
 import DarkMode from "./DarkMode";
 
 const Menu = [
@@ -33,6 +31,11 @@ const Menu = [
     name: "Contact",
     link: "/#",
   },
+  {
+    id:4,
+    name:'Sign In',
+    link:'/loginpage'
+  }
 ];
 
 const DropdownLinks = [
@@ -54,6 +57,7 @@ const DropdownLinks = [
 ];
 
 const Navbar = ({ handleOrderPopup }) => {
+  // const navigate = useLocation();
   return (
     <div className="shadow-md bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
       {/* upper Navbar */}
@@ -95,20 +99,20 @@ const Navbar = ({ handleOrderPopup }) => {
         </div>
       </div>
       {/* lower Navbar */}
-      <div data-aos="zoom-in" className="flex justify-center">
+      <div data-aos="zoom-in" className="d-flex justify-content-center align-items-center" style={{padding:'10px 0 0 0'}}>
         <ul className="sm:flex hidden items-center gap-4">
           {Menu.map((data) => (
-            <li key={data.id}>
-              <a
+            <li key={data.id} >
+              <a 
                 href={data.link}
-                className="inline-block px-4 hover:text-primary duration-200"
+                className="inline-block px-4 hover:text-primary navlink duration-200"
               >
                 {data.name}
               </a>
             </li>
           ))}
           {/* Simple Dropdown and Links */}
-          <li className="group relative cursor-pointer">
+          {/* <li className="group relative cursor-pointer">
             <a href="#" className="flex items-center gap-[2px] py-2">
               Blogs 
               <span>
@@ -129,7 +133,7 @@ const Navbar = ({ handleOrderPopup }) => {
                 ))}
               </ul>
             </div>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>
