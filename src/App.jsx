@@ -20,7 +20,7 @@ function App() {
           <Route path="/dashnavbar" element={<Dashnavbar/>}/>
           <Route path="/sidebar" element={<Sidebar/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
-          <Route path="/plumber" element={<Dashplumber/>}/>
+          <Route path="/plumberdetails" element={<Dashplumber/>}/>
           <Route path="/review" element={<Dashreview/>}/>
           <Route path="/customer" element={<Dashcustomer/>}/>
       </Routes>

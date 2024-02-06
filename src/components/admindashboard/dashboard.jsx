@@ -24,7 +24,7 @@ function Dashboard(){
                 </div>
                 </div>
                 <hr className="MuiDivider-root MuiDivider-fullWidth css-17li347-MuiDivider-root"></hr>
-                <div class="MuiBox-root css-bln954"><p class="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root"><span class="MuiTypography-root MuiTypography-button css-15ti2lr-MuiTypography-root">+55%</span>&nbsp;than lask week</p></div>
+                <div className="MuiBox-root css-bln954"><p className="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root"><span className="MuiTypography-root MuiTypography-button css-15ti2lr-MuiTypography-root">+55%</span>&nbsp;than lask week</p></div>
                </div>
                 </div> 
                <div className="col-12 col-md-3">
@@ -34,12 +34,12 @@ function Dashboard(){
                 <i className="fa fa-user-plus"></i>
                 </div>
                 <div>
-                <p className="cardp">Today's Users</p>
+                <p className="cardp">Today&apos;s Users</p>
                 <p className="cardp1">281+</p>
                 </div>
                 </div>
                 <hr className="MuiDivider-root MuiDivider-fullWidth css-17li347-MuiDivider-root"></hr>
-                <div class="MuiBox-root css-bln954"><p class="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root"><span class="MuiTypography-root MuiTypography-button css-15ti2lr-MuiTypography-root">+55%</span>&nbsp;than yesterday</p></div>
+                <div className="MuiBox-root css-bln954"><p className="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root"><span className="MuiTypography-root MuiTypography-button css-15ti2lr-MuiTypography-root">+55%</span>&nbsp;than yesterday</p></div>
                </div>
                 </div> 
                <div className="col-12 col-md-3">
@@ -54,7 +54,7 @@ function Dashboard(){
                 </div>
                 </div>
                 <hr className="MuiDivider-root MuiDivider-fullWidth css-17li347-MuiDivider-root"></hr>
-                <div class="MuiBox-root css-bln954"><p class="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root"><span class="MuiTypography-root MuiTypography-button css-15ti2lr-MuiTypography-root">+55%</span>&nbsp;than last month</p></div>
+                <div className="MuiBox-root css-bln954"><p className="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root"><span className="MuiTypography-root MuiTypography-button css-15ti2lr-MuiTypography-root">+55%</span>&nbsp;than last month</p></div>
                </div>
                 </div> 
                 <div className="col-12 col-md-3">
@@ -69,8 +69,8 @@ function Dashboard(){
                 </div>
                 </div>
                 <hr className="MuiDivider-root MuiDivider-fullWidth css-17li347-MuiDivider-root"></hr>
-                <div class="MuiBox-root css-bln954"><p class="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root">Just updated</p></div>
-                {/* <div class="MuiBox-root css-bln954"><p class="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root"><span class="MuiTypography-root MuiTypography-button css-15ti2lr-MuiTypography-root">+55%</span>&nbsp;than lask week</p></div> */}
+                <div className="MuiBox-root css-bln954"><p className="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root">Just updated</p></div>
+                {/* <div className="MuiBox-root css-bln954"><p class="MuiTypography-root MuiTypography-button css-3iprzi-MuiTypography-root"><span className="MuiTypography-root MuiTypography-button css-15ti2lr-MuiTypography-root">+55%</span>&nbsp;than lask week</p></div> */}
                </div>
                </div>
             </div>
