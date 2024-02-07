@@ -61,7 +61,7 @@ const Footer = () => {
                 <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
                   Important Links
                 </h1>
-                <ul className="flex flex-col gap-3">
+                <ul className="flex flex-col gap-3 pl-0">
                   {FooterLinks.map((link) => (
                     <li
                       className="cursor-pointer hover:text-primary hover:translate-x-1 duration-300 text-gray-200"
@@ -78,7 +78,7 @@ const Footer = () => {
                 <h1 className="sm:text-xl text-xl font-bold sm:text-left text-justify mb-3">
                   Links
                 </h1>
-                <ul className="flex flex-col gap-3">
+                <ul className="flex flex-col gap-3 pl-0">
                   {FooterLinks.map((link) => (
                     <li
                       className="cursor-pointer hover:text-primary hover:translate-x-1 duration-300 text-gray-200"
@@ -106,15 +106,16 @@ const Footer = () => {
                 </a>
               </div>
               <div className="mt-6">
-                <div className="flex items-center gap-3">
-                  <FaLocationArrow />
-                  <p>Noida, Uttar Pradesh</p>
-                </div>
-                <div className="flex items-center gap-3 mt-3">
-                  <FaMobileAlt />
-                  <p>+91 123456789</p>
-                </div>
-              </div>
+    <div className="flex items-center gap-3">
+        <FaLocationArrow />
+        <p className="m-0">Noida, Uttar Pradesh</p>
+    </div>
+    <div className="flex items-center gap-3 mt-3">
+        <FaMobileAlt />
+        <p className="m-0">+91 123456789</p>
+    </div>
+</div>
+
             </div>
           </div>
         </div>

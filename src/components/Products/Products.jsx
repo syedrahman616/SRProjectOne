@@ -54,10 +54,10 @@ const Products = () => {
       <div className="container">
         {/* Header section */}
         <div className="text-center mb-10 max-w-[600px] mx-auto">
-          <p data-aos="fade-up" className="text-sm text-primary">
+          <p data-aos="fade-up" className="text-4xl text-primary">
             Plumbing
           </p>
-          <h1 data-aos="fade-up" className="text-3xl font-bold">
+          <h1 data-aos="fade-up" className="text-3xl  text-dark font-bold">
             Details
           </h1>
           <p data-aos="fade-up" className="text-xs text-gray-400">
@@ -67,7 +67,7 @@ const Products = () => {
         </div>
         {/* Body section */}
         <div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 place-items-center gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 place-items-center gap-4 text-dark">
             {/* card section */}
             {ProductsData.map((data) => (
               <div
@@ -79,7 +79,7 @@ const Products = () => {
                 <img
                   src={data.img}
                   alt=""
-                  className="h-[220px] w-[150px] object-cover rounded-md"
+                  className="h-[220px]  object-cover rounded-md"
                 />
                 <div>
                   <h3 className="font-semibold">{data.title}</h3>
@@ -94,7 +94,7 @@ const Products = () => {
           </div>
           {/* view all button */}
           <div className="flex justify-center">
-            <button className="text-center mt-10 cursor-pointer bg-primary text-white py-1 px-5 rounded-md">
+            <button className="text-center mt-10 cursor-pointer bg-gradient-to-r from-primary to-secondary hover:scale-105 duration-200 text-white rounded-full py-1 px-5 rounded-md">
               View All Button
             </button>
           </div>

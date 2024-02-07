@@ -2,7 +2,7 @@
 *{
     font-family: 'Poppins', sans-serif;
 }
-.login100{
+.login100 {
     width: 100%;
     background-color: #f8f8f8;
     height: 100vh;
@@ -11,9 +11,75 @@
     justify-content: center;
     align-items: center;
 }
-.signpad{
+
+.signpad {
     padding: 40px 0px 40px 0px;
 }
+
+.loginpagecenter {
+    background-color: white;
+    border: 1px solid;
+    width: 75%;
+    min-height: 450px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logh3 {
+    font-size: 28px;
+    color: black;
+    font-weight: 600;
+}
+
+.logininput {
+    width: 100%;
+    height: 45px;
+    border: none !important;
+    border-bottom: 1px solid #ced4da !important;
+    outline: none;
+}
+
+.logremember {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.logcheckbox {
+    width: 20px;
+    height: 15px;
+}
+
+.loginbutton {
+    width: 100%;
+    height: 40px;
+    background-color:#6caddf;
+    color: #ffffff;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .loginpagecenter {
+        width: 90%; /* Adjust as needed */
+    }
+    .logininput {
+        height: 40px; /* Adjust input height for mobile */
+    }
+    .logcheckbox {
+        width: 15px; /* Adjust checkbox width for mobile */
+        height: 15px; /* Adjust checkbox height for mobile */
+    }
+    .col-6{
+        width: 50%;
+    }
+}
+
 .sign100{
     width: 100%;
     background-color: #f8f8f8;
@@ -23,54 +89,9 @@
     justify-content: center;
     align-items: center;
 }
-.loginpagecenter{
-   background-color: white;
-   border: 1px solid;
-   width: 75%;
-   /* height: 100%; */
-   min-height: 450px;
-   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-   border-radius: 5px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-}
-.navlink{
-    color: black;
-    text-decoration: none;
-}
-.logh3{
-    font-size: 28px;
-    color: black;
-    font-weight: 600;
-}
-.logininput{
-    width: 100%;
-    height: 45px;
-    border: none !important;
-    border-bottom: 1px solid #ced4da !important;
-    outline: none;
-}
+
 .form-control:focus{
     box-shadow: none !important;
-}
-.logremember{
-    font-size: 15px;
-    font-weight: 500;
-}
-.logcheckbox{
-    width: 20px;
-    height: 15px;
-}
-.loginbutton{
-    width: 100%;
-    height: 40px;
-    background-color: #6caddf;
-    color: #FFFFFF;
-    border: none;
-    font-size: 16px;
-    font-weight: 400;
-    border-radius: 5px;
 }
 .nav100{
    width: 100%;
@@ -82,6 +103,10 @@
    justify-content: space-between;
    align-items: center;
    z-index: 1;
+}
+.navlink{
+    color: black;
+    text-decoration: none;
 }
 .nav-left img{
     width: 130px;
@@ -98,6 +123,8 @@
     font-size: 19px;
     font-weight: 500;
 }
+
+
  .dash100{
     width: 100%;
     height: 100%;
@@ -124,8 +151,7 @@
     padding: 20px;
  }
  .dashaddbutton{
-    width: 100%;
-    max-width: 150px;
+    width: 90px;
     height: 40px;
     background-color: #6caddf;
     color: white;
@@ -360,27 +386,8 @@
     font-weight: 500;
     height: 40px;
 }
-/*   
-.dashside_ul li a .active-link{
-    background-color: #6caddf;
-}  
-  .dashside_ul li:hover {
-    background-color: #ddd;
-    color: white;
-  }
-   */
-  /* .dashside_ul li a .active-link {
-    color: black;
-  } */
-  
-  /* .dashside_ul li:hover .sidebar-link i {
-    color: white;
-  } */
-  
-  
-/* .dashside_ul li:hover{
-    background-color:  #6caddf;
-} */
+
+
 .aside100{
     width: 300px;
     box-shadow: 0px 0px 10px 0px #0000001A;
@@ -440,7 +447,7 @@
   }
   
   .aside100 {
-    display: none; /* Initially hidden on small screens */
+    display: none; 
   }
   .aside100.visible {
     display: block; /* Show the sidebar when the 'visible' class is present */
@@ -459,5 +466,63 @@
     }
   }
 
+/* Plumber table*/
+
+.table-container {
+    margin-top: 20px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  /* Center align table data */
+  .table td {
+    text-align: center;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+  }
+  
+  .table img {
+    max-width: 100px;
+    max-height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .table .review-cell {
+    vertical-align: middle;
+  }
+  
+  .table .comment-list {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .table .comment-list li {
+    list-style-type: none;
+    margin-bottom: 5px;
+  }
+  
+  .table {
+    border-collapse: collapse;
+  }
+  
+  /* Style for table rows */
+  .table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternate row background color */
+   
+  }
   
   
