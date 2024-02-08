@@ -7,6 +7,8 @@ import Dashnavbar from "./components/admindashboard/dashnavbar";
 import Sidebar from "./components/admindashboard/dashsidebar";
 import Dashboard from "./components/admindashboard/dashboard";
 import Dashplumber from "./components/admindashboard/dashplumber";
+import DashplumberJobs from "./components/admindashboard/dashplumberjobs";
+import DashCustomerJobs from "./components/admindashboard/dashcustomerjobs";
 import Dashreview from "./components/admindashboard/dashreview";
 import Dashcustomer from "./components/admindashboard/dashcustomer";
 
@@ -21,6 +23,8 @@ function App() {
           <Route path="/sidebar" element={<Sidebar/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/plumberdetails" element={<Dashplumber/>}/>
+          <Route path="/plumberjobs" element={<DashplumberJobs/>}/>
+          <Route path="/customerjobs" element={<DashCustomerJobs/>}/>
           <Route path="/review" element={<Dashreview/>}/>
           <Route path="/customer" element={<Dashcustomer/>}/>
       </Routes>
