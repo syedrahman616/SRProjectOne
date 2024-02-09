@@ -57,7 +57,7 @@ function Sidebar() {
             {activeDropdown === "customers" && (
               <>
                 <li>
-                  <Link to="/customerDetails"><i className="fa fa-address-card" /> Customer Details</Link>
+                  <Link to="/customer"><i className="fa fa-address-card" /> Customer Details</Link>
                 </li>
                 <li>
                   <Link to="/customerjobs"><i className="fa fa-shopping-cart" /> Customer Jobs</Link>
