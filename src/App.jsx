@@ -11,13 +11,13 @@ import DashplumberJobs from "./components/admindashboard/dashplumberjobs";
 import DashCustomerJobs from "./components/admindashboard/dashcustomerjobs";
 import Dashreview from "./components/admindashboard/dashreview";
 import Dashcustomer from "./components/admindashboard/dashcustomer";
-
+import PlumberDashboard from "./components/plumberdashboard/plumberDashboard";
+import PlumberNavbar from "./components/plumberdashboard/plumbernavbar";
+import PlumberSidebar from "./components/plumberdashboard/plumbersidebar";
+import PlumberJobs from "./components/plumberdashboard/plumberjobs";
 import Cusotmerdashboard from "./components/Customerdashboard/customerdashboard";
 import Customerdash from "./components/Customerdashboard/customerdashboard";
 import Cusotmerjobs from "./components/Customerdashboard/customerjobs";
-// import Customerplumber from "./components/Customerdashboard/customerjobs";
-
-// import Cusotmerjobs from "./components/Customerdashboard/customerjobs";
 import Customerplumber from "./components/Customerdashboard/customerplumber";
 
 
@@ -36,12 +36,15 @@ function App() {
           <Route path="/customerjobs" element={<DashCustomerJobs/>}/>
           <Route path="/review" element={<Dashreview/>}/>
           <Route path="/customer" element={<Dashcustomer/>}/>
-
           <Route path="/customerdashboard" element={<Cusotmerdashboard/>}/>
           <Route path="/customer" element={<Dashcustomer/>}/>
           <Route path="/customerdashboard" element={<Customerdash/>}/>
           <Route path="/customerjobslist" element={<Cusotmerjobs/>}/>
           <Route path="/plumbers" element={<Customerplumber/>}/>
+          <Route path="/plumberdashboard" element={<PlumberDashboard/>}/>
+          <Route path="/plumbernavbar" element={<PlumberNavbar/>}/>
+          <Route path="/plumbersidebar" element={<PlumberSidebar/>}/>
+          <Route path="/plumberjobsdetail" element={<PlumberJobs/>}/>
       </Routes>
     </Router>
   );

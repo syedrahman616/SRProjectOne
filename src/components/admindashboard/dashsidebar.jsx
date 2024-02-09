@@ -57,7 +57,7 @@ function Sidebar() {
             {activeDropdown === "customers" && (
               <>
                 <li>
-                  <Link to="/customer"><i className="fa fa-address-card" /> Customer Details</Link>
+                  <Link to="/customerDetails"><i className="fa fa-address-card" /> Customer Details</Link>
                 </li>
                 <li>
                   <Link to="/customerjobs"><i className="fa fa-shopping-cart" /> Customer Jobs</Link>
@@ -69,6 +69,12 @@ function Sidebar() {
             <Link to="/review" className={location.pathname === "/review" ? "active-link" : ""}>
               <i className={`fa fa-star${location.pathname === "/review" ? " active-link" : ""}`} />
               Review & Ratings
+            </Link>
+          </li>
+          <li className={location.pathname === "/loginpage" ? "active-link" : ""}>
+            <Link to="/loginpage" className={location.pathname === "/loginpage" ? "active-link" : ""}>
+              <i className={`fa fa-sign-out${location.pathname === "/loginpage" ? " active-link" : ""}`} />
+              Log Out
             </Link>
           </li>
         </ul>

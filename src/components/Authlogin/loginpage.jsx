@@ -8,6 +8,9 @@ function Login() {
   const log = () => {
     navigate("/dashboard");
   };
+  const log1 = () => {
+    navigate("/plumberdashboard");
+  };
   const log2 = () => {
     navigate("/customerdashboard");
   };
@@ -79,7 +82,7 @@ function Login() {
               <button className="loginbutton" onClick={log}>
                   Admin
                 </button>
-                <button className="loginbutton" onClick={log}>
+                <button className="loginbutton" onClick={log1}>
                   Plumber
                 </button>
                 <button className="loginbutton" onClick={log2}>
