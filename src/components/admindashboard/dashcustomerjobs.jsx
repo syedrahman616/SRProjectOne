@@ -114,7 +114,7 @@ function Dashcustomerjobs() {
       >
         <Modal.Body style={{ margin: '0', padding: '0' }}>
           <div className="modalpad">
-            <h5>Add New Customer</h5>
+            <h5>Add Customer Order</h5>
             <div className="mt-3">
               <label className="mb-2">Enter Name:</label>
               <input type="text" className="form-control"></input>

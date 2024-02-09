@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital@0;1&display=swap');
 *{
     font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 .login100 {
     width: 100%;
-    background-color: #f8f8f8;
+    background: linear-gradient(305deg, rgba(200, 80, 192, 0.8), rgba(65, 88, 208, 0.8));
     height: 100vh;
     min-height: 100%;
     display: flex;
@@ -13,16 +15,16 @@
 }
 
 .signpad {
-    padding: 40px 0px 40px 0px;
+    padding: 20px 0px 40px 0px;
 }
 
-.loginpagecenter {
+.loginpagecenter { 
     background-color: white;
     border: 1px solid;
     width: 75%;
     min-height: 450px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
+    border-radius: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +57,7 @@
 .loginbutton {
     width: 100%;
     height: 40px;
-    background-color:#6caddf;
+    background: linear-gradient(305deg, rgba(200, 80, 192, 0.8), rgba(65, 88, 208, 0.8));
     color: #ffffff;
     border: none;
     font-size: 18px;
@@ -79,15 +81,13 @@
         width: 50%;
     }
 }
-
-.sign100{
+.sign100 {
     width: 100%;
-    background-color: #f8f8f8;
-    height: 100%;
-    min-height: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(305deg, rgba(200, 80, 192, 0.8), rgba(65, 88, 208, 0.8));
 }
 
 .form-control:focus{
@@ -535,5 +535,3 @@
     background-color: #f9f9f9; /* Alternate row background color */
    
   }
-  
-  

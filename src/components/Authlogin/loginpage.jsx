@@ -72,6 +72,17 @@ function Login() {
                   Login
                 </button>
               </div>
+              <div className="mt-2 d-flex align-items-center gap-2">
+              <button className="loginbutton" onClick={log}>
+                  Admin
+                </button>
+                <button className="loginbutton" onClick={log}>
+                  Plumber
+                </button>
+                <button className="loginbutton" onClick={log}>
+                  Customer
+                </button>
+              </div>
             </div>
           </div>
         </div>
