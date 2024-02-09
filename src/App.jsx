@@ -18,6 +18,7 @@ import Cusotmerjobs from "./components/Customerdashboard/customerjobs";
 // import Customerplumber from "./components/Customerdashboard/customerjobs";
 
 // import Cusotmerjobs from "./components/Customerdashboard/customerjobs";
+import Customerplumber from "./components/Customerdashboard/customerplumber";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/customer" element={<Dashcustomer/>}/>
           <Route path="/customerdashboard" element={<Customerdash/>}/>
           <Route path="/customerjobslist" element={<Cusotmerjobs/>}/>
+          <Route path="/plumbers" element={<Customerplumber/>}/>
       </Routes>
     </Router>
   );

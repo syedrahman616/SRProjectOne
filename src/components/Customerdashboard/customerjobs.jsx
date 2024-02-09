@@ -36,7 +36,7 @@ function Customerjobs(){
           <div className="dashmain">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div className="d-flex align-items-center">
-                <div className="me-3">
+                {/* <div className="me-3">
                   <select
                     className="form-select"
                     value={statusFilter}
@@ -45,8 +45,8 @@ function Customerjobs(){
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
                   </select>
-                </div>
-                <div>
+                </div> */}
+                {/* <div>
                   <input
                     type="text"
                     className="form-control"
@@ -54,12 +54,12 @@ function Customerjobs(){
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
                   />
-                </div>
+                </div> */}
               </div>
-              <div>
+              {/* <div>
                 <button className="btn btn-primary me-2" title="Download PDF"><i className="fa fa-file-pdf">Pdf</i></button>
                 <button className="btn btn-secondary" title="Download Other"><i className="fa fa-download">Other</i></button>
-              </div>
+              </div> */}
             </div>
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div>
@@ -73,10 +73,9 @@ function Customerjobs(){
                     <th scope="col">No</th>
                     <th scope="col">Customer Name</th>
                     <th scope="col">Address</th>
-                    <th scope="col">Plubing Issue</th>
+                    <th scope="col">Plumbing Issue</th>
                     <th scope="col">Description</th>
                     <th scope="col">Start Date</th>
-
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
                   </tr>
@@ -129,8 +128,16 @@ function Customerjobs(){
             <input type="text" className="form-control"></input>
           </div>
           <div className="mt-3">
+            <label className="mb-2">Image File:</label>
+            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Vedio File:</label>
+            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+          </div>
+          <div className="mt-3">
             <label className="mb-2">Start Date:</label>
-            <input type="text" className="form-control"></input>
+            <input type="date" className="form-control"></input>
           </div>
           
           <div className="d-flex justify-content-end mt-3 align-items-center">

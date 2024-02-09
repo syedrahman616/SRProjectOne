@@ -54,7 +54,7 @@ function CustomerSidebar() {
             {activeDropdown === "plumbers" && (
               <>
                 <li>
-                  <Link to="/customerplumber"><i className="fa fa-user" /> Plumber Detail</Link>
+                  <Link to="/plumbers"><i className="fa fa-user" /> Plumber Detail</Link>
                 </li>
                 <li>
                   <Link to="/plumberdetails"><i className="fa fa-briefcase" /> Plumber Jobs</Link>
@@ -63,9 +63,9 @@ function CustomerSidebar() {
             )}
           </li>
           
-          <li className={location.pathname === "/review" ? "active-link" : ""}>
-            <Link to="/review" className={location.pathname === "/review" ? "active-link" : ""}>
-              <i className={`fa fa-star${location.pathname === "/review" ? " active-link" : ""}`} />
+          <li className={location.pathname === "#" ? "active-link" : ""}>
+            <Link to="#" className={location.pathname === "#" ? "active-link" : ""}>
+              <i className={`fa fa-sign-out${location.pathname === "#" ? " active-link" : ""}`} />
               Logout
             </Link>
           </li>
