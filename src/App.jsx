@@ -12,6 +12,14 @@ import DashCustomerJobs from "./components/admindashboard/dashcustomerjobs";
 import Dashreview from "./components/admindashboard/dashreview";
 import Dashcustomer from "./components/admindashboard/dashcustomer";
 
+import Cusotmerdashboard from "./components/Customerdashboard/customerdashboard";
+import Customerdash from "./components/Customerdashboard/customerdashboard";
+import Cusotmerjobs from "./components/Customerdashboard/customerjobs";
+// import Customerplumber from "./components/Customerdashboard/customerjobs";
+
+// import Cusotmerjobs from "./components/Customerdashboard/customerjobs";
+
+
 function App() {
   return (
     <Router>
@@ -27,6 +35,11 @@ function App() {
           <Route path="/customerjobs" element={<DashCustomerJobs/>}/>
           <Route path="/review" element={<Dashreview/>}/>
           <Route path="/customer" element={<Dashcustomer/>}/>
+
+          <Route path="/customerdashboard" element={<Cusotmerdashboard/>}/>
+          <Route path="/customer" element={<Dashcustomer/>}/>
+          <Route path="/customerdashboard" element={<Customerdash/>}/>
+          <Route path="/customerjobslist" element={<Cusotmerjobs/>}/>
       </Routes>
     </Router>
   );
