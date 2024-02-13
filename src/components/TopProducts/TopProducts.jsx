@@ -1,7 +1,4 @@
 import React from "react";
-// import Img1 from "../../assets/shirt/shirt.png";
-// import Img2 from "../../assets/shirt/shirt2.png";
-// import Img3 from "../../assets/shirt/shirt3.png";
 import Img6 from "../../assets/women/img5.jpg";
 import Img7 from "../../assets/women/img6.jpg";
 import Img8 from "../../assets/women/imge2.jpg";
@@ -51,6 +48,7 @@ const TopProducts = ({ handleOrderPopup }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20 md:gap-5 place-items-center text-dark">
           {ProductsData.map((data) => (
             <div
+              key={data.id} // Add key prop here
               data-aos="zoom-in"
               className="rounded-2xl bg-white dark:bg-gray-800 hover:bg-black/80 dark:hover:bg-warning hover:text-white relative shadow-xl duration-300 group max-w-[300px]"
             >

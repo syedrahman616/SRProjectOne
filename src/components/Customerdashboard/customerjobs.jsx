@@ -98,10 +98,10 @@ function Customerjobs(){
                         <option value="Inactive">Inactive</option>
                       </select>
                     </td>
-                    <td>
-                      <button className="btn btn-primary me-2" title="View">View <i className="fa fa-eye"></i></button>
-                      <button className="btn btn-warning me-2" title="Edit">Edit <i className="fa fa-edit"></i></button>
-                      <button className="btn btn-danger" title="Delete">Delete <i className="fa fa-trash"></i></button>
+                    <td className="flex-column gap-2">
+                      <button className="mt-2 btn btn-primary flex items-center" title="View">View <i className="fa fa-eye ml-1"></i></button>
+                      <button className="mt-2 btn btn-warning flex items-center" title="Edit">Edit <i className="fa fa-edit ml-1"></i></button>
+                      <button className="mt-2 btn btn-danger flex items-center" title="Delete">Delete <i className="fa fa-trash ml-1"></i></button>
                     </td>
                   </tr>
                 </tbody>

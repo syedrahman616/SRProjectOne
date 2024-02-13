@@ -5,7 +5,6 @@ import Modal from 'react-bootstrap/Modal';
 
 function Dashplumber() {
   const [show1, setShow1] = useState(false);
-  const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
   const [statusFilter, setStatusFilter] = useState("All"); // Default filter
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -31,7 +30,7 @@ function Dashplumber() {
       <div className="container-fluid" style={{ backgroundColor: 'rgb(248, 248, 248)', width: '100%', height: '100vh' }}>
         <div className="row dash_row">
           <div className="col-3 col_corr_2">
-            <Sidebar activelink={isPlumbersLinkActive} />
+            <Sidebar/>
           </div>
           <div className="col-9 col_corr_1">
             <div className="dashmain">

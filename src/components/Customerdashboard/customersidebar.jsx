@@ -34,35 +34,29 @@ function CustomerSidebar() {
               Jobs
               <i className={`fa fa-caret-down`} />
             </div>
-            {activeDropdown === "customers" && (
-              <>
-                <li>
-                  <Link to="/customerjobslist"><i className="fa fa-address-card" />Job</Link>
-                </li>
-                {/* <li>
-                  <Link to="#"><i className="fa fa-shopping-cart" /> Customer Orders</Link>
-                </li> */}
-              </>
-            )}
           </li>
+          {activeDropdown === "customers" && (
+            <li>
+              <Link to="/customerjobslist"><i className="fa fa-address-card" />Job</Link>
+            </li>
+          )}
           <li onClick={() => toggleDropdown("plumbers")} className={`dropdown ${activeDropdown === "plumbers" ? "active-link" : ""}`}>
             <div>
               <i className={`fa fa-wrench ${activeDropdown === "plumbers" ? " active-link" : ""}`} />
               Plumbers
               <i className={`fa fa-caret-down`} />
             </div>
-            {activeDropdown === "plumbers" && (
-              <>
-                <li>
-                  <Link to="/plumbers"><i className="fa fa-user" /> Plumber Detail</Link>
-                </li>
-                <li>
-                  <Link to="/plumberdetails"><i className="fa fa-briefcase" /> Plumber Jobs</Link>
-                </li>
-              </>
-            )}
           </li>
-          
+          {activeDropdown === "plumbers" && (
+            <>
+              <li>
+                <Link to="/plumbers"><i className="fa fa-user" /> Plumber Detail</Link>
+              </li>
+              <li>
+                <Link to="/plumberdetails"><i className="fa fa-briefcase" /> Plumber Jobs</Link>
+              </li>
+            </>
+          )}
           <li className={location.pathname === "#" ? "active-link" : ""}>
             <Link to="#" className={location.pathname === "#" ? "active-link" : ""}>
               <i className={`fa fa-sign-out${location.pathname === "#" ? " active-link" : ""}`} />

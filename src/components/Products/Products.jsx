@@ -37,7 +37,7 @@ const ProductsData = [
     aosDelay: "0",
   },
   {
-    id: 3,
+    id: 4,
     img: Img8,
     title: "Bathroom Plumbing",
     rating: 5.0,
@@ -82,8 +82,8 @@ const Products = () => {
                   className="h-[220px]  object-cover rounded-md"
                 />
                 <div>
-                  <h3 className="font-semibold">{data.title}</h3>
-                  <p className="text-sm text-gray-600">{data.color}</p>
+                  <h3 className="font-semibold text-xl mb-1">{data.title}</h3>
+                  <p className="text-sm text-gray-600 mb-1">{data.color}</p>
                   <div className="flex items-center gap-1">
                     <FaStar className="text-yellow-400" />
                     <span>{data.rating}</span>

@@ -86,8 +86,8 @@ function Customerplumber(){
                     <td>Data 2</td>
                     <td>Data 2</td>
                     <td>Plumbing issue</td>
-                    <td><button type="button" class="btn btn-primary">Work On Progress</button></td>
-                    <td><button type="button" class="btn btn-success">Send Notify</button></td>
+                    <td><button  className="btn btn-primary">Work On Progress</button></td>
+                    <td><button  className="btn btn-success">Send Notify</button></td>
                   </tr>
                   <tr>
                     <th scope="row">1</th>
@@ -95,8 +95,8 @@ function Customerplumber(){
                     <td>Data 2</td>
                     <td>Data 2</td>
                     <td>Plumbing issue</td>
-                    <td><button type="button" class="btn btn-success">Active</button></td>
-                    <td><button type="button" class="btn btn-success">Send Notify</button></td>
+                    <td><button  className="btn btn-success">Active</button></td>
+                    <td><button className="btn btn-success">Send Notify</button></td>
                   </tr>
                 </tbody>
               </table>

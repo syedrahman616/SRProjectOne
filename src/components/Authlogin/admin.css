@@ -20,11 +20,11 @@
 
 .loginpagecenter { 
     background-color: white;
-    border: 1px solid;
+    /* border: 1px solid; */
     width: 75%;
     min-height: 450px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    border-radius: 25px;
+    border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,14 +68,14 @@
 /* Mobile styles */
 @media (max-width: 768px) {
     .loginpagecenter {
-        width: 90%; /* Adjust as needed */
+        width: 90%; 
     }
     .logininput {
-        height: 40px; /* Adjust input height for mobile */
+        height: 40px; 
     }
     .logcheckbox {
-        width: 15px; /* Adjust checkbox width for mobile */
-        height: 15px; /* Adjust checkbox height for mobile */
+        width: 15px; 
+        height: 15px; 
     }
     .col-6{
         width: 50%;
@@ -137,12 +137,7 @@
     position: relative;
     padding-top: 100px;
  }
- .col_corr_2{
-    width: 20%;
- }
- .col_corr_1{
-    width: 80%;
- }
+ 
  .dashmain{
     width: 100%;
     /* height: 100%; */
@@ -161,9 +156,9 @@
     width: 100%;
     height: 130px;
     background-color: white;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin-bottom: 20px;
-    border-radius: 10px;
+    /* border-radius: 10px; */
  }
  .css {
     display: -webkit-box;
@@ -488,7 +483,6 @@
   .table th,
   .table td {
     padding: 8px;
-    border: 1px solid #ddd;
     text-align: center;
     vertical-align: middle;
   }
@@ -502,7 +496,7 @@
   }
   
   .table th {
-    background-color: #f2f2f2;
+    background-color: #ffffff;
   }
   
   .table img {
@@ -532,6 +526,6 @@
   
   /* Style for table rows */
   .table tbody tr:nth-child(even) {
-    background-color: #f9f9f9; /* Alternate row background color */
+    background-color: #ffffff; 
    
   }

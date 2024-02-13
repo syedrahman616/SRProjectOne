@@ -34,11 +34,11 @@ function Login() {
                   </Link>
                 </label>
               </div>
-            </div>
+            </div>           
             <div className="col-6 p-3">
               <h3 className="logh3 ">Sign In</h3>
               <div className="mt-4">
-                <div className="input-group">
+                <div className="input-group gap-2">
                   <span className="input-icon d-flex jusify-content-center align-items-center ">
                     <i className="fa fa-user ml-2"></i>
                   </span>
@@ -48,10 +48,9 @@ function Login() {
                     placeholder="Enter your name"
                   />
                 </div>
-                {/* <input type="text" className="form-control logininput" placeholder="Enter your name"></input> */}
               </div>
               <div className="mt-4">
-                <div className="input-group">
+                <div className="input-group gap-2 ">
                   <span className="input-icon d-flex jusify-content-center align-items-center ">
                     <i className="fa fa-lock ml-2"></i>
                   </span>
@@ -61,7 +60,6 @@ function Login() {
                     placeholder="Enter your password"
                   ></input>
                 </div>
-                {/* <input type="text" className="form-control logininput" placeholder="Enter your password"></input> */}
               </div>
               <div className="mt-3 ml-1 d-flex align-items-center">
                 <input

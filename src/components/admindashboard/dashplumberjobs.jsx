@@ -12,15 +12,9 @@ function DashPlumberJobs() {
 
   // Function to handle applying for a job
   const applyForJob = (jobId) => {
-    // Implement logic to apply for the job with the given ID
-    // You may update the job status or perform other actions
-    // For now, let's just log a message
     console.log(`Applied for job with ID: ${jobId}`);
   };
-
-  // Function to fetch jobs from the server (simulated)
   const fetchJobs = () => {
-    // Simulated data for demonstration
     const fetchedJobs = [
       {
         id: 1,
@@ -40,12 +34,9 @@ function DashPlumberJobs() {
         startDate: "2024-02-10",
         status: "In Progress",
       },
-      // Add more jobs as needed
     ];
     setJobs(fetchedJobs);
   };
-
-  // useEffect hook to fetch jobs when component mounts
   useEffect(() => {
     fetchJobs();
   }, []);
@@ -58,17 +49,15 @@ function DashPlumberJobs() {
     setShow1(true);
   };
 
-  // Function to handle search query change
+
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  // Function to handle status filter change
   const handleStatusFilterChange = (status) => {
     setStatusFilter(status);
   };
 
-  // Filter jobs based on search query and status
   const filteredJobs = jobs.filter((job) => {
     return (
       job.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -149,14 +138,14 @@ function DashPlumberJobs() {
                         <td>{job.startDate}</td>
                         <td>{job.status}</td>
                         <td className="action-table">
-                          <button className="btn btn-primary me-2" title="View">
+                          <button className="btn btn-primary" title="View">
                             View <i className="fa fa-eye"></i>
                           </button>
                           <button className="mt-2 btn btn-warning me-2" title="Edit">
                             Edit <i className="fa fa-edit"></i>
                           </button>
-                          <button className="mt-2 btn btn-danger" title="Delete">
-                            Delete <i className="fa fa-trash"></i>
+                          <button className="mt-2 btn btn-danger flex items-center" title="Delete">
+                            Delete <i className="fa fa-trash ml-1"></i>
                           </button>
                         </td>
                       </tr>
@@ -178,7 +167,6 @@ function DashPlumberJobs() {
         <Modal.Body style={{ margin: "0", padding: "0" }}>
           <div className="modalpad">
             <h5>Add New Plumber</h5>
-            {/* Form for adding new plumber */}
           </div>
         </Modal.Body>
       </Modal>
