@@ -2,15 +2,58 @@ import React, { useState } from "react";
 import "./admin.css";
 import Img5 from "../../assets/women/plumbing_19 [Converted]-01.png";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+
 function Signup() {
-  const [selectedRole, setSelectedRole] = useState(""); // State to store the selected role
+  const [formData, setFormData] = useState({
+    fullName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    postcode: "",
+    address: "",
+    role: ""
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const [selectedRole, setSelectedRole] = useState(""); 
 
   const handleRoleChange = (e) => {
     setSelectedRole(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const data = {
+        fullName: formData.fullName,
+        address: formData.address,
+        postCode: formData.postcode,
+        email: formData.email,
+        password: formData.password,
+        userRole: formData.role, // using selectedRole instead of role
+      };
+      const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/auth/signup";
+      const response = await axios.post(apiurl, data);
+
+     
+      console.log(response);
+      if (response.status===200) {
+        console.log("User registered successfully");
+      } else {
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
   };
 
   return (
@@ -48,7 +91,8 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput"
+                    className="form-control logininput" value={formData.name}
+                    name="fullName" onChange={handleInputChange}
                     placeholder="Enter Name"
                   />
                 </div>
@@ -64,7 +108,7 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput"
+                    className="form-control logininput" value={formData.lastname} name="lastname" onChange={handleInputChange}
                     placeholder="Enter Last Name"
                   />
                 </div>
@@ -79,7 +123,7 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput"
+                    className="form-control logininput" value={formData.email} name="email" onChange={handleInputChange}
                     placeholder="Enter Email"
                   ></input>
                 </div>
@@ -94,8 +138,8 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput"
-                    placeholder="Enter Password"
+                    className="form-control logininput" name="password" value={formData.password} 
+                    onChange={handleInputChange} placeholder="Enter Password"
                   ></input>
                 </div>
               </div>
@@ -109,8 +153,8 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput"
-                    placeholder="Enter Post-code"
+                    className="form-control logininput" name="postcode" value={formData.postcode}
+                    onChange={handleInputChange} placeholder="Enter Post-code"
                   ></input>
                 </div>
               </div>
@@ -124,7 +168,7 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput"
+                    className="form-control logininput" name="address" value={formData.address} onChange={handleInputChange}
                     placeholder="Enter Address"
                   ></input>
                 </div>
@@ -135,9 +179,9 @@ function Signup() {
                     <i className="fa fa-user me-3"></i>
                   </span>
                   <select
-                    className="form-control logininput "style={{ marginLeft: "-7px" }}
-                    value={selectedRole}
-                    onChange={handleRoleChange}
+                    className="form-control logininput "style={{ marginLeft: "-7px" }} name="userRole"
+                    value={formData.selectedRole}
+                    onChange={handleInputChange}
                   >
                     <option value="">Select Role</option>
                     <option value="Plumber" data-icon="fa fa-wrench">
