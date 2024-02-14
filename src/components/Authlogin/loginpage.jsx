@@ -1,26 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import "./admin.css";
 import Img5 from "../../assets/women/plumbing-01.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 function Login() {
   const navigate = useNavigate();
-  const log = () => {
-    navigate("/dashboard");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
-  const log1 = () => {
-    navigate("/plumberdashboard");
+
+  const loginUser = async () => {
+    try {
+      const data = {
+        email: formData.email,
+        password: formData.password,
+      };
+      const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/auth/login"; 
+      const response = await axios.post(apiurl, data);
+  
+      if (response.status === 200) {
+        const userData = response.data;
+        console.log("Login successful:", userData);
+  
+        if (userData.role) {
+          const role = userData.role.toLowerCase();
+          if (role === "admin") {
+            navigate("/dashboard");
+          } else if (role === "plumber") {
+            navigate("/plumberdashboard");
+          } else if (role === "customer") {
+            navigate("/customerdashboard");
+          }
+        } else {
+          console.error("Role information not found in the response");
+        }
+      } else {
+        console.error("Login failed with status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
   };
-  const log2 = () => {
-    navigate("/customerdashboard");
-  };
+  
+
+  
   return (
     <>
       <div className="login100 signpad">
         <div className="loginpagecenter">
           <div className="row p-5">
             <div className="col-6">
-              <img src={Img5}></img>
+              <img src={Img5} style={{ objectFit: "fill", height: "85%" ,width :"100%"}}></img>
               <div className="d-flex justify-content-center mt-2">
                 <label>
                   Don't have an account?{" "}
@@ -45,7 +86,10 @@ function Login() {
                   <input
                     type="text"
                     className="form-control logininput"
-                    placeholder="Enter your name"
+                    placeholder="Enter your email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
@@ -55,10 +99,13 @@ function Login() {
                     <i className="fa fa-lock ml-2"></i>
                   </span>
                   <input
-                    type="text"
+                    type="password"
                     className="form-control logininput"
                     placeholder="Enter your password"
-                  ></input>
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                  />
                 </div>
               </div>
               <div className="mt-3 ml-1 d-flex align-items-center">
@@ -72,19 +119,8 @@ function Login() {
                 </label>
               </div>
               <div className="mt-4">
-                <button className="loginbutton" onClick={log}>
+                <button className="loginbutton" onClick={loginUser}>
                   Login
-                </button>
-              </div>
-              <div className="mt-2 d-flex align-items-center gap-2">
-              <button className="loginbutton" onClick={log}>
-                  Admin
-                </button>
-                <button className="loginbutton" onClick={log1}>
-                  Plumber
-                </button>
-                <button className="loginbutton" onClick={log2}>
-                  Customer
                 </button>
               </div>
             </div>
@@ -94,4 +130,5 @@ function Login() {
     </>
   );
 }
+
 export default Login;

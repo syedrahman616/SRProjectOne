@@ -59,12 +59,12 @@ function Signup() {
   return (
     <>
       <div className="sign100 signpad">
-        <div className="loginpagecenter">
+        <div className="loginpagecenter1">
           <div className="row p-2">
             <div className="col-6">
               <img
                 src={Img5}
-                style={{ objectFit: "fill", height: "90%" }}
+                style={{ objectFit: "fill", height: "90%" ,width :"90%"}}
               ></img>
               <div className="d-flex justify-content-center mt-2">
                 <label>
@@ -81,7 +81,7 @@ function Signup() {
             </div>
             <div className="col-6 p-3">
               <h3 className="logh3">Sign Up</h3>
-              <div className="mt-4">
+              <div className="mt-2">
                 <div className="input-group">
                   <span
                     className="input-icon d-flex jusify-content-center align-items-center"
@@ -98,7 +98,7 @@ function Signup() {
                 </div>
                 {/* <input type="text" className="form-control logininput" placeholder="Enter your name"></input> */}
               </div>
-              <div className="mt-4">
+              <div className="mt-2">
                 <div className="input-group">
                   <span
                     className="input-icon d-flex jusify-content-center align-items-center"
@@ -113,7 +113,7 @@ function Signup() {
                   />
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="mt-2">
                 <div className="input-group">
                   <span
                     className="input-icon d-flex jusify-content-center align-items-center"
@@ -128,7 +128,7 @@ function Signup() {
                   ></input>
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="mt-2">
                 <div className="input-group">
                   <span
                     className="input-icon d-flex jusify-content-center align-items-center"
@@ -143,7 +143,7 @@ function Signup() {
                   ></input>
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="mt-2">
                 <div className="input-group">
                   <span
                     className="input-icon d-flex jusify-content-center align-items-center"
@@ -158,7 +158,7 @@ function Signup() {
                   ></input>
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="mt-2">
                 <div className="input-group">
                   <span
                     className="input-icon d-flex jusify-content-center align-items-center"
@@ -173,7 +173,7 @@ function Signup() {
                   ></input>
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="mt-2">
                 <div className="input-group">
                   <span className="input-icon d-flex jusify-content-center align-items-center" >
                     <i className="fa fa-user me-3"></i>
@@ -196,7 +196,7 @@ function Signup() {
                   </select>
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="mt-2">
                 <button className="loginbutton" onClick={handleSubmit}>
                   Register
                 </button>
