@@ -19,31 +19,31 @@ function Login() {
       [name]: value
     });
   };
-
   const loginUser = async () => {
     try {
       const data = {
         email: formData.email,
         password: formData.password,
       };
-      const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/auth/login"; 
-      const response = await axios.post(apiurl, data);
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+      const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/auth/login";
+      const response = await axios.post(apiurl, data, { headers });
   
       if (response.status === 200) {
-        const userData = response.data;
-        console.log("Login successful:", userData);
+        const responseData = response.data;
+        console.log("Login successful:", responseData);
   
-        if (userData.role) {
-          const role = userData.role.toLowerCase();
-          if (role === "admin") {
-            navigate("/dashboard");
-          } else if (role === "plumber") {
-            navigate("/plumberdashboard");
-          } else if (role === "customer") {
-            navigate("/customerdashboard");
-          }
+        const userRole = responseData.userRole.toLowerCase();
+        if (userRole === "admin") {
+          navigate("/dashboard"); 
+        } else if (userRole === "plumber") {
+          navigate("/plumberdashboard"); 
+        } else if (userRole === "customer") {
+          navigate("/customerdashboard"); 
         } else {
-          console.error("Role information not found in the response");
+          console.error("Unknown user role:", userRole);
         }
       } else {
         console.error("Login failed with status:", response.status);
@@ -52,16 +52,14 @@ function Login() {
       console.error("Error logging in:", error);
     }
   };
-  
 
-  
   return (
     <>
       <div className="login100 signpad">
         <div className="loginpagecenter">
           <div className="row p-5">
             <div className="col-6">
-              <img src={Img5} style={{ objectFit: "fill", height: "85%" ,width :"100%"}}></img>
+              <img src={Img5} className= "logimage" alt="Plumbing Image" />
               <div className="d-flex justify-content-center mt-2">
                 <label>
                   Don't have an account?{" "}
@@ -76,7 +74,7 @@ function Login() {
                 </label>
               </div>
             </div>           
-            <div className="col-6 p-3">
+            <div className="col-6 p-3 ">
               <h3 className="logh3 ">Sign In</h3>
               <div className="mt-4">
                 <div className="input-group gap-2">
@@ -85,6 +83,7 @@ function Login() {
                   </span>
                   <input
                     type="text"
+                    
                     className="form-control logininput"
                     placeholder="Enter your email"
                     name="email"

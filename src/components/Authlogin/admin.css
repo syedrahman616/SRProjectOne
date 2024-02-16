@@ -13,16 +13,17 @@
     justify-content: center;
     align-items: center;
 }
-
+.logimage{
+    object-fit: fill;
+    height: 80%;   
+}
 .signpad {
     padding: 20px 0px 40px 0px;
 }
 
 .loginpagecenter { 
     background-color: white;
-    /* border: 1px solid; */
-    width: 80%;
-    /* min-height: 300px; */
+    width: 75%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     border-radius: 15px;
     display: flex;
@@ -31,22 +32,30 @@
 }
 .loginpagecenter1 { 
     background-color: white;
-    
     width: 90%;
-    height: 90%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-@media (min-width: 1281px) and (max-width:1600px) {
+@media (min-width: 1200px) and (max-width:1600px) {
     .loginpagecenter {
-        width: 75%; /* Adjust the width of the login container */
+        width: 65%; 
     }
-    .col-6 img{
-        width: 80%;
-        height: 90%;
+    .loginpagecenter1 {
+        width: 75%;
+        height: 92%;
+    }
+    .logimage{ 
+        object-fit: fill;
+        /* height: 75%; */
+    }
+    .signimg{
+        margin-left: 45px;
+        object-fit: fill;
+        height: 90% ;
+        width :80%;
     }
     
 }
@@ -110,7 +119,12 @@
     align-items: center;
     background: linear-gradient(305deg, rgba(200, 80, 192, 0.8), rgba(65, 88, 208, 0.8));
 }
-
+.signimg{
+    margin-left: 45px;
+    object-fit: fill;
+    height: 90% ;
+    width :80%;
+}
 .form-control:focus{
     box-shadow: none !important;
 }

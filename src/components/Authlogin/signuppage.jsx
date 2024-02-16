@@ -23,13 +23,6 @@ function Signup() {
     });
   };
 
-  const [selectedRole, setSelectedRole] = useState(""); 
-
-  const handleRoleChange = (e) => {
-    setSelectedRole(e.target.value);
-  };
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -39,12 +32,11 @@ function Signup() {
         postCode: formData.postcode,
         email: formData.email,
         password: formData.password,
-        userRole: formData.role, // using selectedRole instead of role
+        userRole: formData.role,
       };
       const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/auth/signup";
       const response = await axios.post(apiurl, data);
 
-     
       console.log(response);
       if (response.status===200) {
         console.log("User registered successfully");
@@ -64,7 +56,7 @@ function Signup() {
             <div className="col-6">
               <img
                 src={Img5}
-                style={{ objectFit: "fill", height: "90%" ,width :"90%"}}
+               className="signimg"
               ></img>
               <div className="d-flex justify-content-center mt-2">
                 <label>
@@ -91,12 +83,13 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput" value={formData.name}
-                    name="fullName" onChange={handleInputChange}
+                    className="form-control logininput"
+                    value={formData.fullName}
+                    name="fullName"
+                    onChange={handleInputChange}
                     placeholder="Enter Name"
                   />
                 </div>
-                {/* <input type="text" className="form-control logininput" placeholder="Enter your name"></input> */}
               </div>
               <div className="mt-2">
                 <div className="input-group">
@@ -108,7 +101,10 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput" value={formData.lastname} name="lastname" onChange={handleInputChange}
+                    className="form-control logininput"
+                    value={formData.lastName}
+                    name="lastName"
+                    onChange={handleInputChange}
                     placeholder="Enter Last Name"
                   />
                 </div>
@@ -123,9 +119,12 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput" value={formData.email} name="email" onChange={handleInputChange}
+                    className="form-control logininput"
+                    value={formData.email}
+                    name="email"
+                    onChange={handleInputChange}
                     placeholder="Enter Email"
-                  ></input>
+                  />
                 </div>
               </div>
               <div className="mt-2">
@@ -138,9 +137,12 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput" name="password" value={formData.password} 
-                    onChange={handleInputChange} placeholder="Enter Password"
-                  ></input>
+                    className="form-control logininput"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    placeholder="Enter Password"
+                  />
                 </div>
               </div>
               <div className="mt-2">
@@ -153,9 +155,12 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput" name="postcode" value={formData.postcode}
-                    onChange={handleInputChange} placeholder="Enter Post-code"
-                  ></input>
+                    className="form-control logininput"
+                    name="postcode"
+                    value={formData.postcode}
+                    onChange={handleInputChange}
+                    placeholder="Enter Post-code"
+                  />
                 </div>
               </div>
               <div className="mt-2">
@@ -168,9 +173,12 @@ function Signup() {
                   </span>
                   <input
                     type="text"
-                    className="form-control logininput" name="address" value={formData.address} onChange={handleInputChange}
+                    className="form-control logininput"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
                     placeholder="Enter Address"
-                  ></input>
+                  />
                 </div>
               </div>
               <div className="mt-2">
@@ -179,8 +187,10 @@ function Signup() {
                     <i className="fa fa-user me-3"></i>
                   </span>
                   <select
-                    className="form-control logininput "style={{ marginLeft: "-7px" }} name="userRole"
-                    value={formData.selectedRole}
+                    className="form-control logininput "
+                    style={{ marginLeft: "-7px" }}
+                    name="role"
+                    value={formData.role}
                     onChange={handleInputChange}
                   >
                     <option value="">Select Role</option>
@@ -201,14 +211,6 @@ function Signup() {
                   Register
                 </button>
               </div>
-              {/* <div className="mt-2">
-                Already have an account?{" "}
-                <Link to="/loginpage">
-                  <b style={{ color: "#6caddf", textDecoration: "underline" }}>
-                    Sign In
-                  </b>
-                </Link>
-              </div> */}
             </div>
           </div>
         </div>
