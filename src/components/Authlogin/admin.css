@@ -17,9 +17,9 @@
     object-fit: fill;
     height: 80%;   
 }
-.signpad {
+/* .signpad {
     padding: 20px 0px 40px 0px;
-}
+} */
 
 .loginpagecenter { 
     background-color: white;
@@ -39,13 +39,20 @@
     justify-content: center;
     align-items: center;
 }
+@media (min-width: 1024px) and (max-width:1189px) {
+    .loginpagecenter1 {
+        width: 75%;
+        height: 85%;
+}
+}
+
 @media (min-width: 1200px) and (max-width:1600px) {
     .loginpagecenter {
         width: 65%; 
     }
     .loginpagecenter1 {
         width: 75%;
-        height: 92%;
+        height: 85%;
     }
     .logimage{ 
         object-fit: fill;

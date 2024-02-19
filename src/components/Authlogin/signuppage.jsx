@@ -6,17 +6,22 @@ import axios from 'axios';
 
 function Signup() {
   const [formData, setFormData] = useState({
-    fullName: "",
+    firstName: "",
     lastName: "",
     email: "",
     password: "",
     postcode: "",
     address: "",
-    role: ""
+    role: "",
+    mobile: "",
+    registrationStatus: "" // New state for registration status
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (name === "mobile" && !/^\+?\d{0,10}$/.test(value)) {
+      return; 
+    }
     setFormData({
       ...formData,
       [name]: value
@@ -27,9 +32,11 @@ function Signup() {
     e.preventDefault();
     try {
       const data = {
-        fullName: formData.fullName,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         address: formData.address,
         postCode: formData.postcode,
+        mobile: formData.mobile,
         email: formData.email,
         password: formData.password,
         userRole: formData.role,
@@ -38,8 +45,12 @@ function Signup() {
       const response = await axios.post(apiurl, data);
 
       console.log(response);
-      if (response.status===200) {
+      if (response.status === 200) {
         console.log("User registered successfully");
+        setFormData({
+          ...formData,
+          registrationStatus: "success"
+        });
       } else {
         console.error("Registration failed");
       }
@@ -47,11 +58,11 @@ function Signup() {
       console.error("Error registering user:", error);
     }
   };
-
   return (
     <>
       <div className="sign100 signpad">
         <div className="loginpagecenter1">
+        
           <div className="row p-2">
             <div className="col-6">
               <img
@@ -84,8 +95,8 @@ function Signup() {
                   <input
                     type="text"
                     className="form-control logininput"
-                    value={formData.fullName}
-                    name="fullName"
+                    value={formData.firstName}
+                    name="firstName"
                     onChange={handleInputChange}
                     placeholder="Enter Name"
                   />
@@ -142,6 +153,24 @@ function Signup() {
                     value={formData.password}
                     onChange={handleInputChange}
                     placeholder="Enter Password"
+                  />
+                </div>
+              </div>
+              <div className="mt-2">
+                <div className="input-group">
+                  <span
+                    className="input-icon d-flex jusify-content-center align-items-center"
+                    style={{ marginRight: "14px" }}
+                  >
+                    <i className="fa fa-mobile"></i>
+                  </span>
+                  <input
+                    type="text"
+                    className="form-control logininput"
+                    value={formData.mobile}
+                    name="mobile"
+                    onChange={handleInputChange}
+                    placeholder="Enter Mobile Number"
                   />
                 </div>
               </div>
@@ -211,6 +240,11 @@ function Signup() {
                   Register
                 </button>
               </div>
+              {formData.registrationStatus === "success" && (
+            <div className="alert alert-success" role="alert">
+              User registered successfully!
+            </div>
+          )}
             </div>
           </div>
         </div>

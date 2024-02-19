@@ -35,15 +35,16 @@ function Login() {
         const responseData = response.data;
         console.log("Login successful:", responseData);
   
-        const userRole = responseData.userRole.toLowerCase();
-        if (userRole === "admin") {
+        const userRole1 = responseData.data.userRole;
+        console.log(userRole1);
+        if (userRole1 === "admin") {
           navigate("/dashboard"); 
-        } else if (userRole === "plumber") {
+        } else if (userRole1 === "plumber") {
           navigate("/plumberdashboard"); 
-        } else if (userRole === "customer") {
+        } else if (userRole1 === "customer") {
           navigate("/customerdashboard"); 
         } else {
-          console.error("Unknown user role:", userRole);
+          console.error("Unknown user role:", userRole1);
         }
       } else {
         console.error("Login failed with status:", response.status);

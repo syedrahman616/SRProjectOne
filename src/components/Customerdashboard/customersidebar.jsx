@@ -58,7 +58,7 @@ function CustomerSidebar() {
             </>
           )}
           <li className={location.pathname === "#" ? "active-link" : ""}>
-            <Link to="#" className={location.pathname === "#" ? "active-link" : ""}>
+            <Link to="/loginpage" className={location.pathname === "#" ? "active-link" : ""}>
               <i className={`fa fa-sign-out${location.pathname === "#" ? " active-link" : ""}`} />
               Logout
             </Link>
