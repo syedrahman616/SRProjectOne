@@ -42,7 +42,7 @@
 @media (min-width: 1024px) and (max-width:1189px) {
     .loginpagecenter1 {
         width: 75%;
-        height: 85%;
+        
 }
 }
 
@@ -52,7 +52,6 @@
     }
     .loginpagecenter1 {
         width: 75%;
-        height: 85%;
     }
     .logimage{ 
         object-fit: fill;
