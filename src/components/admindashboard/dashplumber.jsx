@@ -1,12 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dashnavbar from "./dashnavbar";
 import Sidebar from "./dashsidebar";
 import Modal from 'react-bootstrap/Modal';
+import axios from "axios";
 
 function Dashplumber() {
   const [show1, setShow1] = useState(false);
-  const [statusFilter, setStatusFilter] = useState("All"); // Default filter
+  const [statusFilter, setStatusFilter] = useState("All"); 
   const [searchQuery, setSearchQuery] = useState("");
+  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-plumber";
+  const [plumberData, setPlumberData] = useState([]); 
+
+  const plumberget = async() => {
+    try{
+      var token = localStorage.getItem('accessToken');
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const response = await axios.get(apiurl,{headers});
+      if(response.status===200){
+        setPlumberData(response.data.data); 
+        console.log('checking',response.data.data);
+      }
+    }catch(error){
+        console.log(error);
+    }
+  }
+
+  useEffect(() =>{
+     plumberget();
+  },[])
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    postcode: "",
+    address: "",
+    role: "",
+    mobile: "",
+    registrationStatus: "" 
+  });
 
   const handleCloses1 = () => {
     setShow1(false);
@@ -23,6 +59,52 @@ function Dashplumber() {
   const handleSearchChange = (query) => {
     setSearchQuery(query);
   };
+
+   //add new plumber
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    // if (name === "mobile" && !/^\+?\d{0,10}$/.test(value)) {
+    //   return; 
+    // }
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const role='Plumber';
+      const data = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        address: formData.address,
+        postCode: formData.postcode,
+        mobile: formData.mobile,
+        email: formData.email,
+        password: formData.password,
+        userRole: role,
+      };
+      const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/auth/signup";
+      const response = await axios.post(apiurl, data);
+
+      console.log(response);
+      if (response.status === 200) {
+        console.log("User registered successfully");
+        setFormData({
+          ...formData,
+          registrationStatus: "success"
+        });
+      } else {
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
+  };
+
+  //end
 
   return (
     <>
@@ -80,12 +162,14 @@ function Dashplumber() {
                     </tr>
                   </thead>
                   <tbody>
+                  {plumberData.map((plumber, index) => (
+
                     <tr>
-                      <th scope="row">1</th>
-                      <td>Data 1</td>
-                      <td>Data 2</td>
-                      <td>Data 2</td>
-                      <td>Data 2</td>
+                      <th scope="row"></th>
+                      <td>{plumber.firstName}</td>
+                      <td>{plumber.userEmail}</td>
+                      <td>{plumber.postCode}</td>
+                      <td>{plumber.address}</td>
                       <td>
                         <select
                           className="form-select"
@@ -102,6 +186,7 @@ function Dashplumber() {
                         <button className="btn btn-danger" title="Delete">Delete <i className="fa fa-trash"></i></button>
                       </td>
                     </tr>
+                  ))}
                   </tbody>
                 </table>
               </div>
@@ -115,27 +200,37 @@ function Dashplumber() {
             <h5>Add New Plumber</h5>
             <div className="mt-3">
               <label className="mb-2">Enter Name:</label>
-              <input type="text" className="form-control"></input>
+              <input type="text" name="firstName" value={formData.firstName}  onChange={handleInputChange} className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter LastName:</label>
+              <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} className="form-control"></input>
             </div>
             <div className="mt-3">
               <label className="mb-2">Enter Email:</label>
-              <input type="text" className="form-control"></input>
+              <input type="text"  name="email" value={formData.email} onChange={handleInputChange} className="form-control"></input>
             </div>
+        
             <div className="mt-3">
               <label className="mb-2">Enter Password:</label>
-              <input type="text" className="form-control"></input>
+              <input type="text" name="password" value={formData.password} onChange={handleInputChange}className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Mobile Number:</label>
+              <input type="text" name="mobile" value={formData.mobile} onChange={handleInputChange}className="form-control"></input>
             </div>
             <div className="mt-3">
               <label className="mb-2">Enter Address:</label>
-              <input type="text" className="form-control"></input>
+              <input type="text" name="address" value={formData.address} onChange={handleInputChange}
+               className="form-control"></input>
             </div>
             <div className="mt-3">
               <label className="mb-2">Enter Postcode:</label>
-              <input type="text" className="form-control"></input>
+              <input type="text" name="postcode"  value={formData.postcode} onChange={handleInputChange}className="form-control"></input>
             </div>
             <div className="d-flex justify-content-end mt-3 align-items-center">
-              <button className="modalclose me-3">Cancel</button>
-              <button className="modalsave">Save</button>
+              <button className="modalclose me-3" >Cancel</button>
+              <button  className="modalsave" onClick={handleSubmit}>Save</button>
             </div>
           </div>
         </Modal.Body>

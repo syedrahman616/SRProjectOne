@@ -34,17 +34,17 @@ function Login() {
       if (response.status === 200) {
         const responseData = response.data;
         console.log("Login successful:", responseData);
-  
+         localStorage.setItem('accessToken',  responseData.data.accessToken);
         const userRole1 = responseData.data.userRole;
         console.log(userRole1);
-        if (userRole1 === "admin") {
+        if (userRole1 === "Admin") {
           navigate("/dashboard"); 
-        } else if (userRole1 === "plumber") {
+        } else if (userRole1 === "Plumber") {
           navigate("/plumberdashboard"); 
-        } else if (userRole1 === "customer") {
+        } else if (userRole1 === "Customer") {
           navigate("/customerdashboard"); 
         } else {
-          console.error("Unknown user role:", userRole1);
+          console.error("Unknown user role:", userRole1 );
         }
       } else {
         console.error("Login failed with status:", response.status);

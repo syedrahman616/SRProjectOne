@@ -1,12 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import Dashnavbar from "./dashnavbar";
 import Sidebar from "./dashsidebar";
 import Modal from 'react-bootstrap/Modal';
+import axios from "axios";
+
 function Dashcustomer(){
   const [show1, setShow1] = useState(false);
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
   const [statusFilter, setStatusFilter] = useState("All"); // Default filter
   const [searchQuery, setSearchQuery] = useState("");
+
+  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-customer";
+  const [customerData, setCustomerData] = useState([]); 
+
+  const customerget = async() => {
+    try{
+      var token = localStorage.getItem('accessToken');
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const response = await axios.get(apiurl,{headers});
+      if(response.status===200){
+        setCustomerData(response.data.data); 
+        console.log('checking',response.data.data);
+      }
+    }catch(error){
+        console.log(error);
+    }
+  }
+
+  useEffect(() =>{
+    customerget();
+  },[])
 
   const handleCloses1 = () => {
     setShow1(false);
@@ -71,7 +97,7 @@ function Dashcustomer(){
                 <thead>
                   <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Customer Name</th>
+                    <th scope="col">Customer Names</th>
                     <th scope="col">Email</th>
                     <th scope="col">Post-code</th>
                     <th scope="col">Address</th>
@@ -80,12 +106,14 @@ function Dashcustomer(){
                   </tr>
                 </thead>
                 <tbody>
+                {customerData.map((customer, index) => (
+
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Data 1</td>
-                    <td>Data 2</td>
-                    <td>Data 2</td>
-                    <td>Data 2</td>
+                    <th scope="row"></th>
+                    <td>{customer.firstName}</td>
+                    <td>{customer.userEmail}</td>
+                    <td>{customer.postCode}</td>
+                    <td>{customer.address}</td>
                     <td>
                       <select
                         className="form-select"
@@ -102,6 +130,7 @@ function Dashcustomer(){
                       <button className="btn btn-danger" title="Delete">Delete <i className="fa fa-trash"></i></button>
                     </td>
                   </tr>
+                ))}
                 </tbody>
               </table>
             </div>
