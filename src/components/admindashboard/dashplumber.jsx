@@ -11,9 +11,10 @@ function Dashplumber() {
   const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-plumber";
   const [plumberData, setPlumberData] = useState([]); 
 
+  var token = localStorage.getItem('accessToken');
+
   const plumberget = async() => {
     try{
-      var token = localStorage.getItem('accessToken');
       const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -86,11 +87,16 @@ function Dashplumber() {
         password: formData.password,
         userRole: role,
       };
-      const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/auth/signup";
-      const response = await axios.post(apiurl, data);
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/add-user";
+      const response = await axios.post(apiurl, data,{headers});
 
       console.log(response);
       if (response.status === 200) {
+        setShow1(false);
         console.log("User registered successfully");
         setFormData({
           ...formData,
@@ -108,13 +114,19 @@ function Dashplumber() {
 
   return (
     <>
+
       <Dashnavbar/>
       <div className="container-fluid" style={{ backgroundColor: 'rgb(248, 248, 248)', width: '100%', height: '100vh' }}>
-        <div className="row dash_row">
+        <div className="row dash_row">   
           <div className="col-3 col_corr_2">
             <Sidebar/>
           </div>
           <div className="col-9 col_corr_1">
+          {formData.registrationStatus === "success" && (
+              <div className="alert alert-success" role="alert">
+                User added successfully!
+              </div>
+            )}
             <div className="dashmain">
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <div className="d-flex align-items-center">
@@ -165,7 +177,7 @@ function Dashplumber() {
                   {plumberData.map((plumber, index) => (
 
                     <tr>
-                      <th scope="row"></th>
+                      <th scope="row">{index + 1}</th>
                       <td>{plumber.firstName}</td>
                       <td>{plumber.userEmail}</td>
                       <td>{plumber.postCode}</td>

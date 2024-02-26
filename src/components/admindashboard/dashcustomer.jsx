@@ -13,9 +13,10 @@ function Dashcustomer(){
   const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-customer";
   const [customerData, setCustomerData] = useState([]); 
 
+  var token = localStorage.getItem('accessToken');
+
   const customerget = async() => {
     try{
-      var token = localStorage.getItem('accessToken');
       const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -50,6 +51,70 @@ function Dashcustomer(){
     setSearchQuery(query);
   };
 
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    postcode: "",
+    address: "",
+    role: "",
+    mobile: "",
+    registrationStatus: "" 
+  });
+
+     //add new plumber
+
+     const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      // if (name === "mobile" && !/^\+?\d{0,10}$/.test(value)) {
+      //   return; 
+      // }
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    };
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const role='Customer';
+        const data = {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          address: formData.address,
+          postCode: formData.postcode,
+          mobile: formData.mobile,
+          email: formData.email,
+          password: formData.password,
+          userRole: role,
+        };
+        const headers = {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+        const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/add-user";
+        const response = await axios.post(apiurl, data,{headers});
+  
+        console.log(response);
+        if (response.status === 200) {
+          setShow1(false);
+          console.log("User registered successfully");
+          setFormData({
+            ...formData,
+            registrationStatus: "success"
+          });
+        } else {
+          console.error("Registration failed");
+        }
+      } catch (error) {
+        console.error("Error registering user:", error);
+      }
+    };
+  
+    //end
+  
+
   return (
     <>
     <Dashnavbar/>
@@ -59,6 +124,11 @@ function Dashcustomer(){
           <Sidebar activelink={isPlumbersLinkActive} />
         </div>
         <div className="col-9 col_corr_1">
+        {formData.registrationStatus === "success" && (
+              <div className="alert alert-success" role="alert">
+                User added successfully!
+              </div>
+            )}
           <div className="dashmain">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div className="d-flex align-items-center">
@@ -109,7 +179,7 @@ function Dashcustomer(){
                 {customerData.map((customer, index) => (
 
                   <tr>
-                    <th scope="row"></th>
+                    <th scope="row">{index + 1}</th>
                     <td>{customer.firstName}</td>
                     <td>{customer.userEmail}</td>
                     <td>{customer.postCode}</td>
@@ -143,29 +213,39 @@ function Dashcustomer(){
         <div className="modalpad">
           <h5>Add New Customer</h5>
           <div className="mt-3">
-            <label className="mb-2">Enter Name:</label>
-            <input type="text" className="form-control"></input>
-          </div>
-          <div className="mt-3">
-            <label className="mb-2">Enter Email:</label>
-            <input type="text" className="form-control"></input>
-          </div>
-          <div className="mt-3">
-            <label className="mb-2">Enter Password:</label>
-            <input type="text" className="form-control"></input>
-          </div>
-          <div className="mt-3">
-            <label className="mb-2">Enter Address:</label>
-            <input type="text" className="form-control"></input>
-          </div>
-          <div className="mt-3">
-            <label className="mb-2">Enter Postcode:</label>
-            <input type="text" className="form-control"></input>
-          </div>
-          <div className="d-flex justify-content-end mt-3 align-items-center">
-            <button className="modalclose me-3">Cancel</button>
-            <button className="modalsave">Save</button>
-          </div>
+              <label className="mb-2">Enter Name:</label>
+              <input type="text" name="firstName" value={formData.firstName}  onChange={handleInputChange} className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter LastName:</label>
+              <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Email:</label>
+              <input type="text"  name="email" value={formData.email} onChange={handleInputChange} className="form-control"></input>
+            </div>
+        
+            <div className="mt-3">
+              <label className="mb-2">Enter Password:</label>
+              <input type="text" name="password" value={formData.password} onChange={handleInputChange}className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Mobile Number:</label>
+              <input type="text" name="mobile" value={formData.mobile} onChange={handleInputChange}className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Address:</label>
+              <input type="text" name="address" value={formData.address} onChange={handleInputChange}
+               className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Postcode:</label>
+              <input type="text" name="postcode"  value={formData.postcode} onChange={handleInputChange}className="form-control"></input>
+            </div>
+            <div className="d-flex justify-content-end mt-3 align-items-center">
+              <button className="modalclose me-3" >Cancel</button>
+              <button  className="modalsave" onClick={handleSubmit}>Save</button>
+            </div>
         </div>
       </Modal.Body>
     </Modal>
