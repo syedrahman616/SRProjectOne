@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import Dashnavbar from "./customernavbar";
 import Sidebar from "./customersidebar";
 import Modal from 'react-bootstrap/Modal';
+import axios from "axios";
+
 function Customerplumber(){
   const [show1, setShow1] = useState(false);
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
@@ -23,6 +25,33 @@ function Customerplumber(){
   const handleSearchChange = (query) => {
     setSearchQuery(query);
   };
+
+  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/customer-jobs";
+  const [plumberData, setPlumberData] = useState([]); 
+
+  var token = localStorage.getItem('accessToken');
+
+  const plumber= async() => {
+    try{
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const response = await axios.get(apiurl,{headers});
+      if(response.status===200){
+        setPlumberData(response.data.data); 
+        console.log('checking',response.data.data);
+      }
+    }catch(error){
+        console.log(error);
+    }
+  }
+
+  useEffect(() =>{
+    plumber();
+  },[])
+
+
 
   return (
     <>
@@ -80,24 +109,17 @@ function Customerplumber(){
                   </tr>
                 </thead>
                 <tbody>
+                {plumberData.map((plumber, index) => (
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Data 1</td>
+                    <th scope="row">{index + 1 }</th>
+                    <td>{plumber.firstName}</td>
                     <td>Data 2</td>
                     <td>Data 2</td>
                     <td>Plumbing issue</td>
                     <td><button  className="btn btn-primary">Work On Progress</button></td>
                     <td><button  className="btn btn-success">Send Notify</button></td>
                   </tr>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Data 1</td>
-                    <td>Data 2</td>
-                    <td>Data 2</td>
-                    <td>Plumbing issue</td>
-                    <td><button  className="btn btn-success">Active</button></td>
-                    <td><button className="btn btn-success">Send Notify</button></td>
-                  </tr>
+                                    ))}
                 </tbody>
               </table>
             </div>

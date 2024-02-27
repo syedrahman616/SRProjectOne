@@ -52,9 +52,6 @@ function CustomerSidebar() {
               <li>
                 <Link to="/plumbers"><i className="fa fa-user" /> Plumber Detail</Link>
               </li>
-              <li>
-                <Link to="/plumberdetails"><i className="fa fa-briefcase" /> Plumber Jobs</Link>
-              </li>
             </>
           )}
           <li className={location.pathname === "#" ? "active-link" : ""}>
