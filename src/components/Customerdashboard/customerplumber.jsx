@@ -26,7 +26,7 @@ function Customerplumber(){
     setSearchQuery(query);
   };
 
-  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/customer-jobs";
+  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/customer-plumber-details";
   const [plumberData, setPlumberData] = useState([]); 
 
   var token = localStorage.getItem('accessToken');
@@ -100,7 +100,7 @@ function Customerplumber(){
                 <thead>
                   <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Plumber Name</th>
+                    <th scope="col">Plumbers Name</th>
                     <th scope="col">Plumber Skill</th>
                     <th scope="col">Description</th>
                     <th scope="col">Start Date</th>
@@ -113,9 +113,9 @@ function Customerplumber(){
                   <tr>
                     <th scope="row">{index + 1 }</th>
                     <td>{plumber.firstName}</td>
-                    <td>Data 2</td>
-                    <td>Data 2</td>
-                    <td>Plumbing issue</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td><button  className="btn btn-primary">Work On Progress</button></td>
                     <td><button  className="btn btn-success">Send Notify</button></td>
                   </tr>

@@ -6,6 +6,8 @@ import axios from "axios";
 
 function Dashplumber() {
   const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
+  const [plumberId, setPlumberId] = useState(null);
   const [statusFilter, setStatusFilter] = useState("All"); 
   const [searchQuery, setSearchQuery] = useState("");
   const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-plumber";
@@ -51,6 +53,15 @@ function Dashplumber() {
 
   const addnew_plumber = () => {
     setShow1(true);
+  };
+
+  const handleCloses2 = () => {
+    setShow2(false);
+  };
+
+  const admin_approve= (id) => {
+    setShow2(true);
+    setPlumberId(id);
   };
 
   const handleStatusFilterChange = (status) => {
@@ -165,6 +176,7 @@ function Dashplumber() {
                   <thead>
                     <tr>
                       <th scope="col">No</th>
+                      <th scope="col">Id</th>
                       <th scope="col">Plumber Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Post-code</th>
@@ -178,6 +190,7 @@ function Dashplumber() {
 
                     <tr>
                       <th scope="row">{index + 1}</th>
+                      <th>{plumber.id}</th>
                       <td>{plumber.firstName}</td>
                       <td>{plumber.userEmail}</td>
                       <td>{plumber.postCode}</td>
@@ -192,7 +205,8 @@ function Dashplumber() {
                           <option value="Inactive">Inactive</option>
                         </select>
                       </td>
-                      <td>
+                      <td >
+                        <button className="btn btn-success me-2" title="View" onClick={() => admin_approve(plumber.id)}>Approve<i className="fa fa-eye"></i></button>
                         <button className="btn btn-primary me-2" title="View">View <i className="fa fa-eye"></i></button>
                         <button className="btn btn-warning me-2" title="Edit">Edit <i className="fa fa-edit"></i></button>
                         <button className="btn btn-danger" title="Delete">Delete <i className="fa fa-trash"></i></button>
@@ -240,6 +254,20 @@ function Dashplumber() {
               <label className="mb-2">Enter Postcode:</label>
               <input type="text" name="postcode"  value={formData.postcode} onChange={handleInputChange}className="form-control"></input>
             </div>
+            <div className="d-flex justify-content-end mt-3 align-items-center">
+              <button className="modalclose me-3" >Cancel</button>
+              <button  className="modalsave" onClick={handleSubmit}>Save</button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={show2} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={handleCloses2} centered>
+        <Modal.Body style={{ margin: '0', padding: '0' }}>
+          <div className="modalpad">
+            <p>Are you sure you want to update?</p>
+            <p>{plumberId}</p>
+            <input type="hidden" name="firstName" value={formData.firstName} className="form-control"></input>
             <div className="d-flex justify-content-end mt-3 align-items-center">
               <button className="modalclose me-3" >Cancel</button>
               <button  className="modalsave" onClick={handleSubmit}>Save</button>

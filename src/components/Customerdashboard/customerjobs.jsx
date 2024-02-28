@@ -41,7 +41,6 @@ function Customerjobs(){
       const response = await axios.get(apiurl,{headers});
       if(response.status===200){
         setCustomerjobData(response.data.data); 
-        console.log('checking',response.data.data);
       }
     }catch(error){
         console.log(error);
