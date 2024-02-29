@@ -12,6 +12,7 @@ import DashCustomerJobs from "./components/admindashboard/dashcustomerjobs";
 import Dashreview from "./components/admindashboard/dashreview";
 import Dashcustomer from "./components/admindashboard/dashcustomer";
 import PlumberDashboard from "./components/plumberdashboard/plumberDashboard";
+// import AllJobs from "./components/plumberdashboard/allJobs";
 import PlumberNavbar from "./components/plumberdashboard/plumbernavbar";
 import PlumberSidebar from "./components/plumberdashboard/plumbersidebar";
 import PlumberJobs from "./components/plumberdashboard/plumberjobs";
@@ -19,6 +20,8 @@ import Cusotmerdashboard from "./components/Customerdashboard/customerdashboard"
 import Customerdash from "./components/Customerdashboard/customerdashboard";
 import Cusotmerjobs from "./components/Customerdashboard/customerjobs";
 import Customerplumber from "./components/Customerdashboard/customerplumber";
+import AllJobs from "./components/plumberdashboard/allJobs";
+import Plumber from "./components/Customerdashboard/plumber";
 
 
 function App() {
@@ -44,7 +47,10 @@ function App() {
           <Route path="/plumberdashboard" element={<PlumberDashboard/>}/>
           <Route path="/plumbernavbar" element={<PlumberNavbar/>}/>
           <Route path="/plumbersidebar" element={<PlumberSidebar/>}/>
-          <Route path="/plumberjobsdetail" element={<PlumberJobs/>}/>
+          <Route path="/plumber/invitejobs" element={<PlumberJobs/>}/> 
+          {/* <Route path="/alljobs" element={<AllJobs/>}/> */}
+          <Route path="/plumber/alljobs" element={<AllJobs/>}/>
+          <Route path="/customer/plumber" element={<Plumber />} />
       </Routes>
     </Router>
   );

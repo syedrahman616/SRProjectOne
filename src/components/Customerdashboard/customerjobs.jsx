@@ -173,6 +173,7 @@ function Customerjobs(){
                       <button className="mt-2 btn btn-primary flex items-center" title="View">View <i className="fa fa-eye ml-1"></i></button>
                       <button className="mt-2 btn btn-warning flex items-center" title="Edit">Edit <i className="fa fa-edit ml-1"></i></button>
                       <button className="mt-2 btn btn-danger flex items-center" title="Delete">Delete <i className="fa fa-trash ml-1"></i></button>
+                      <a href="customer/plumber"><button className="mt-2 btn btn-danger flex items-center" title="Delete">View Plumber<i className="ml-1"></i></button></a>
                     </td>
                   </tr>
                    ))}

@@ -123,6 +123,39 @@ function Dashplumber() {
 
   //end
 
+  //approve 
+  const approveSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const role='Plumber';
+      const action='1';
+      const data = {
+        userId: plumberId,
+        userRole: role,
+        action:action,
+      };
+      console.log(data);
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-approved";
+      const response = await axios.post(apiurl, data,{headers});
+      if (response.status === 200) {
+        setShow2(false);
+        setFormData({
+          ...formData,
+          adminApprove: "success"
+        });
+      } else {
+        console.error("Approved Failed");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
+  };
+  //end
+
   return (
     <>
 
@@ -136,6 +169,11 @@ function Dashplumber() {
           {formData.registrationStatus === "success" && (
               <div className="alert alert-success" role="alert">
                 User added successfully!
+              </div>
+            )}
+             {formData.adminApprove === "success" && (
+              <div className="alert alert-success" role="alert">
+                Approved successfully!
               </div>
             )}
             <div className="dashmain">
@@ -176,7 +214,6 @@ function Dashplumber() {
                   <thead>
                     <tr>
                       <th scope="col">No</th>
-                      <th scope="col">Id</th>
                       <th scope="col">Plumber Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Post-code</th>
@@ -190,7 +227,6 @@ function Dashplumber() {
 
                     <tr>
                       <th scope="row">{index + 1}</th>
-                      <th>{plumber.id}</th>
                       <td>{plumber.firstName}</td>
                       <td>{plumber.userEmail}</td>
                       <td>{plumber.postCode}</td>
@@ -206,7 +242,7 @@ function Dashplumber() {
                         </select>
                       </td>
                       <td >
-                        <button className="btn btn-success me-2" title="View" onClick={() => admin_approve(plumber.id)}>Approve<i className="fa fa-eye"></i></button>
+                        <button className="btn btn-success me-2" title="View" onClick={() => admin_approve(plumber.plumberId)}>Approve<i className="fa fa-eye"></i></button>
                         <button className="btn btn-primary me-2" title="View">View <i className="fa fa-eye"></i></button>
                         <button className="btn btn-warning me-2" title="Edit">Edit <i className="fa fa-edit"></i></button>
                         <button className="btn btn-danger" title="Delete">Delete <i className="fa fa-trash"></i></button>
@@ -266,11 +302,9 @@ function Dashplumber() {
         <Modal.Body style={{ margin: '0', padding: '0' }}>
           <div className="modalpad">
             <p>Are you sure you want to update?</p>
-            <p>{plumberId}</p>
-            <input type="hidden" name="firstName" value={formData.firstName} className="form-control"></input>
             <div className="d-flex justify-content-end mt-3 align-items-center">
               <button className="modalclose me-3" >Cancel</button>
-              <button  className="modalsave" onClick={handleSubmit}>Save</button>
+              <button  className="modalsave" onClick={approveSubmit}>Save</button>
             </div>
           </div>
         </Modal.Body>
