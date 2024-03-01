@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 
 function PlumberSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
@@ -13,6 +14,15 @@ function PlumberSidebar() {
   const toggleDropdown = (dropdown) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
+
+   //...logout...//
+
+   const logOut =() =>{
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userRole");
+    navigate('/');
+  }
+
 
   return (
     <>
@@ -70,25 +80,13 @@ function PlumberSidebar() {
             </>            
           )}
 
-          {/* <li className={location.pathname === "/plumberjobsdetail" ? "active-link" : ""}>
-            <Link to="/plumberjobsdetail" className={location.pathname === "/plumberjobsdetail" ? "active-link" : ""}>
-              <i className={`fa fa-address-card-o${location.pathname === "/plumberjobsdetail" ? " active-link" : ""}`} />
-               Job List
-            </Link>
-          </li> */}
-          <li className={location.pathname === "/loginpage" ? "active-link" : ""}>
-            <Link to="/loginpage" className={location.pathname === "/loginpage" ? "active-link" : ""}>
+        
+          <li className={location.pathname === "/loginpage" ? "active-link" : ""} onClick={logOut}>
               <i className={`fa fa-sign-out${location.pathname === "/loginpage" ? " active-link" : ""}`} />
               Log Out
-            </Link>
           </li>
  
-          {/* <li className={location.pathname === "/review" ? "active-link" : ""}>
-            <Link to="/review" className={location.pathname === "/review" ? "active-link" : ""}>
-              <i className={`fa fa-star${location.pathname === "/review" ? " active-link" : ""}`} />
-              Review & Ratings
-            </Link>
-          </li> */}
+         
         </ul>
       </aside>
     </>

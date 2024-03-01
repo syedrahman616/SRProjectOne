@@ -12,7 +12,6 @@ import DashCustomerJobs from "./components/admindashboard/dashcustomerjobs";
 import Dashreview from "./components/admindashboard/dashreview";
 import Dashcustomer from "./components/admindashboard/dashcustomer";
 import PlumberDashboard from "./components/plumberdashboard/plumberDashboard";
-// import AllJobs from "./components/plumberdashboard/allJobs";
 import PlumberNavbar from "./components/plumberdashboard/plumbernavbar";
 import PlumberSidebar from "./components/plumberdashboard/plumbersidebar";
 import PlumberJobs from "./components/plumberdashboard/plumberjobs";
@@ -34,21 +33,20 @@ function App() {
           <Route path="/dashnavbar" element={<Dashnavbar/>}/>
           <Route path="/sidebar" element={<Sidebar/>}/>
           <Route path="/dashboard" element={<Dashboard/>}/>
-          <Route path="/plumberdetails" element={<Dashplumber/>}/>
-          <Route path="/plumberjobs" element={<DashplumberJobs/>}/>
-          <Route path="/customerjobs" element={<DashCustomerJobs/>}/>
+          <Route path="/admin/plumberdetails" element={<Dashplumber/>}/>
+          <Route path="/admin/plumberjobs" element={<DashplumberJobs/>}/>
+          <Route path="/admin/customerjobs" element={<DashCustomerJobs/>}/>
           <Route path="/review" element={<Dashreview/>}/>
-          <Route path="/customer" element={<Dashcustomer/>}/>
+          <Route path="/admin/customer" element={<Dashcustomer/>}/>
           <Route path="/customerdashboard" element={<Cusotmerdashboard/>}/>
           <Route path="/customer" element={<Dashcustomer/>}/>
-          <Route path="/customerdashboard" element={<Customerdash/>}/>
-          <Route path="/customerjobslist" element={<Cusotmerjobs/>}/>
-          <Route path="/plumbers" element={<Customerplumber/>}/>
+          <Route path="/customer/dashboard" element={<Customerdash/>}/>
+          <Route path="/customer/jobslist" element={<Cusotmerjobs/>}/>
+          <Route path="/customer/plumbers" element={<Customerplumber/>}/>
           <Route path="/plumberdashboard" element={<PlumberDashboard/>}/>
           <Route path="/plumbernavbar" element={<PlumberNavbar/>}/>
           <Route path="/plumbersidebar" element={<PlumberSidebar/>}/>
           <Route path="/plumber/invitejobs" element={<PlumberJobs/>}/> 
-          {/* <Route path="/alljobs" element={<AllJobs/>}/> */}
           <Route path="/plumber/alljobs" element={<AllJobs/>}/>
           <Route path="/customer/plumber" element={<Plumber />} />
       </Routes>

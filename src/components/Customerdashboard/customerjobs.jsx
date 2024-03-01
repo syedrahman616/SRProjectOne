@@ -9,6 +9,8 @@ function Customerjobs(){
   const [show1, setShow1] = useState(false);
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
   const [statusFilter, setStatusFilter] = useState("All"); // Default filter
+  const [jobId, setJobId] = useState(null);
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleCloses1 = () => {
@@ -27,7 +29,8 @@ function Customerjobs(){
     setSearchQuery(query);
   };
 
-  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/customer-plumber-details";
+ 
+  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/customer-jobs";
   const [customerjobsData, setCustomerjobData] = useState([]); 
 
   var token = localStorage.getItem('accessToken');
@@ -62,9 +65,7 @@ function Customerjobs(){
 
    const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // if (name === "mobile" && !/^\+?\d{0,10}$/.test(value)) {
-    //   return; 
-    // }
+    
     setFormData({
       ...formData,
       [name]: value
@@ -112,6 +113,32 @@ function Customerjobs(){
 
   //end
 
+  //...Delete Function...//
+
+  const deleteJob = async(id) => {
+    setJobId(id);
+    const apiurl_delete = "https://plumbing.api.heptotechnologies.org/plumber/user/api/add-job";
+    const flag ='delete';
+    try{
+      const data = {
+        id: id,
+        flag: flag,
+      };
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const response = await axios.post(apiurl_delete,data,{headers});
+      if(response.status===200){
+        customerjobs();
+        console.log(response);
+      }
+    }catch(error){
+        console.log(error);
+    }
+  };
+
+
 
   return (
     <>
@@ -156,7 +183,7 @@ function Customerjobs(){
 
                   <tr>
                     <th scope="row">{index + 1}</th>
-                    <td>{}</td>
+                    <td>{jobs.jobTitle}</td>
                     <td>{jobs.address}</td>
                     <td>{jobs.description}</td>
                     <td>
@@ -170,9 +197,9 @@ function Customerjobs(){
                       </select>
                     </td>
                     <td className="flex-column gap-2">
-                      <button className="mt-2 btn btn-primary flex items-center" title="View">View <i className="fa fa-eye ml-1"></i></button>
+                      <button className="mt-2 btn btn-primary flex items-center"onClick={() => deleteJob1(jobs.id)} title="View">View <i className="fa fa-eye ml-1"></i></button>
                       <button className="mt-2 btn btn-warning flex items-center" title="Edit">Edit <i className="fa fa-edit ml-1"></i></button>
-                      <button className="mt-2 btn btn-danger flex items-center" title="Delete">Delete <i className="fa fa-trash ml-1"></i></button>
+                      <button className="mt-2 btn btn-danger flex items-center" onClick={() => deleteJob(jobs.id)}  title="Delete">Delete <i className="fa fa-trash ml-1"></i></button>
                       <a href="customer/plumber"><button className="mt-2 btn btn-danger flex items-center" title="Delete">View Plumber<i className="ml-1"></i></button></a>
                     </td>
                   </tr>

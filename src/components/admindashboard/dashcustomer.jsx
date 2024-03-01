@@ -6,7 +6,9 @@ import axios from "axios";
 
 function Dashcustomer(){
   const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
+  const [plumberId, setPlumberId] = useState(null);
   const [statusFilter, setStatusFilter] = useState("All"); // Default filter
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -37,6 +39,15 @@ function Dashcustomer(){
 
   const handleCloses1 = () => {
     setShow1(false);
+  };
+
+  const handleCloses2 = () => {
+    setShow2(false);
+  };
+
+  const admin_approve= (id) => {
+    setShow2(true);
+    setPlumberId(id);
   };
 
   const addnew_plumber = () => {
@@ -113,6 +124,39 @@ function Dashcustomer(){
     };
   
     //end
+
+     //approve 
+  const approveSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const role='Plumber';
+      const action='1';
+      const data = {
+        userId: plumberId,
+        userRole: role,
+        action:action,
+      };
+      console.log(data);
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-approved";
+      const response = await axios.post(apiurl, data,{headers});
+      if (response.status === 200) {
+        setShow2(false);
+        setFormData({
+          ...formData,
+          adminApprove: "success"
+        });
+      } else {
+        console.error("Approved Failed");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
+  };
+  //end
   
 
   return (
@@ -127,6 +171,11 @@ function Dashcustomer(){
         {formData.registrationStatus === "success" && (
               <div className="alert alert-success" role="alert">
                 User added successfully!
+              </div>
+            )}
+             {formData.adminApprove === "success" && (
+              <div className="alert alert-success" role="alert">
+                Approved successfully!
               </div>
             )}
           <div className="dashmain">
@@ -195,6 +244,7 @@ function Dashcustomer(){
                       </select>
                     </td>
                     <td>
+                    <button className="btn btn-success me-2" title="View" onClick={() => admin_approve(customer.plumberId)}>Approve<i className="fa fa-eye"></i></button>
                       <button className="btn btn-primary me-2" title="View">View <i className="fa fa-eye"></i></button>
                       <button className="btn btn-warning me-2" title="Edit">Edit <i className="fa fa-edit"></i></button>
                       <button className="btn btn-danger" title="Delete">Delete <i className="fa fa-trash"></i></button>
@@ -248,6 +298,18 @@ function Dashcustomer(){
             </div>
         </div>
       </Modal.Body>
+    </Modal>
+
+    <Modal show={show2} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={handleCloses2} centered>
+        <Modal.Body style={{ margin: '0', padding: '0' }}>
+          <div className="modalpad">
+            <p>Are you sure you want to update?</p>
+            <div className="d-flex justify-content-end mt-3 align-items-center">
+              <button className="modalclose me-3" >Cancel</button>
+              <button  className="modalsave" onClick={approveSubmit}>Save</button>
+            </div>
+          </div>
+        </Modal.Body>
     </Modal>
   </>
 );

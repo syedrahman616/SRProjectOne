@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 
 function CustomerSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
@@ -14,6 +15,14 @@ function CustomerSidebar() {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
+  //...logout...//
+
+  const logOut =() =>{
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userRole");
+    navigate('/');
+  }
+
   return (
     <>
       <div className={`bar-icon ${sidebarVisible ? "active" : ""}`} onClick={toggleSidebar}>
@@ -22,7 +31,7 @@ function CustomerSidebar() {
 
       <aside className={`aside100 ${sidebarVisible ? "visible" : ""}`}>
         <ul className="dashside_ul">
-          <li className={location.pathname === "/customerdashboard" ? "active-link" : ""}>
+          <li className={location.pathname === "/customer/dashboard" ? "active-link" : ""}>
             <Link to="/customerdashboard" className={location.pathname === "/customerdashboard" ? "active-link" : ""}>
               <i className={`fa fa-dashboard${location.pathname === "/customerdashboard" ? " active-link" : ""}`} />
               Dashboard
@@ -37,7 +46,7 @@ function CustomerSidebar() {
           </li>
           {activeDropdown === "customers" && (
             <li>
-              <Link to="/customerjobslist"><i className="fa fa-address-card" />Job</Link>
+              <Link to="/customer/jobslist"><i className="fa fa-address-card" />Job</Link>
             </li>
           )}
           <li onClick={() => toggleDropdown("plumbers")} className={`dropdown ${activeDropdown === "plumbers" ? "active-link" : ""}`}>
@@ -50,15 +59,13 @@ function CustomerSidebar() {
           {activeDropdown === "plumbers" && (
             <>
               <li>
-                <Link to="/plumbers"><i className="fa fa-user" /> Plumber Detail</Link>
+                <Link to="/customer/plumbers"><i className="fa fa-user" /> Plumber Detail</Link>
               </li>
             </>
           )}
-          <li className={location.pathname === "#" ? "active-link" : ""}>
-            <Link to="/loginpage" className={location.pathname === "#" ? "active-link" : ""}>
+          <li className={location.pathname === "#" ? "active-link" : ""} onClick={logOut}>
               <i className={`fa fa-sign-out${location.pathname === "#" ? " active-link" : ""}`} />
               Logout
-            </Link>
           </li>
         </ul>
       </aside>

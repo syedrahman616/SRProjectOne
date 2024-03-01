@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import "./admin.css";
 import Img5 from "../../assets/women/plumbing-01.png";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,34 @@ import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
+
+  //Authenticate checking//
+  var token = localStorage.getItem('accessToken');
+  var role = localStorage.getItem('userRole');
+
+
+  useEffect(() => {
+      if (token) {
+          if(role =="Customer")
+          {
+            navigate("/customerdashboard"); 
+          }
+          else if(role == "Plumber")
+          {
+            navigate("/plumberdashboard"); 
+          }
+          else if(role == "Admin")
+          {
+            navigate("/dashboard"); 
+          }
+          else
+          {
+            navigate("/loginpage"); 
+          }
+      }
+  }, [token, navigate]);
+  //end
+
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -33,9 +61,9 @@ function Login() {
   
       if (response.status === 200) {
         const responseData = response.data;
-        console.log("Login successful:", responseData);
-         localStorage.setItem('accessToken',  responseData.data.accessToken);
         const userRole1 = responseData.data.userRole;
+         localStorage.setItem('accessToken',responseData.data.accessToken);
+         localStorage.setItem('userRole',userRole1);
         console.log(userRole1);
         if (userRole1 === "Admin") {
           navigate("/dashboard"); 

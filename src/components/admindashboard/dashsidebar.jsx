@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation , useNavigate} from "react-router-dom";
 
 function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
@@ -13,6 +14,14 @@ function Sidebar() {
   const toggleDropdown = (dropdown) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
+
+  //...logout...//
+
+  const logOut =() =>{
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userRole");
+    navigate('/');
+  }
 
   return (
     <>
@@ -47,18 +56,18 @@ function Sidebar() {
           </li>
           <li
             className={
-              location.pathname === "/plumberjobs" ? "active-link" : ""
+              location.pathname === "/admin/plumberjobs" ? "active-link" : ""
             }
           >
             <Link
-              to="/plumberjobs"
+              to="/admin/plumberjobs"
               className={
-                location.pathname === "/plumberjobs" ? "active-link" : ""
+                location.pathname === "/admin/plumberjobs" ? "active-link" : ""
               }
             >
               <i
                 className={`fa fa-briefcase${
-                  location.pathname === "/plumberjobs" ? " active-link" : ""
+                  location.pathname === "/admin/plumberjobs" ? " active-link" : ""
                 }`}
               />
               Plumber Orders
@@ -82,7 +91,7 @@ function Sidebar() {
           </li>
           {activeDropdown === "plumbers" && (
             <li>
-              <Link to="/plumberdetails" >
+              <Link to="/admin/plumberdetails" >
                 <i className="fa fa-user" /> Plumber Detail
               </Link>
             </li>
@@ -107,12 +116,12 @@ function Sidebar() {
           {activeDropdown === "customers" && (
             <>
               <li>
-                <Link to="/customer">
+                <Link to="/admin/customer">
                   <i className="fa fa-address-card" /> Customer Details
                 </Link>
               </li>
               <li>
-                <Link to="/customerjobs">
+                <Link to="/admin/customerjobs">
                   <i className="fa fa-shopping-cart" /> Customer Jobs
                 </Link>
               </li>
@@ -132,21 +141,15 @@ function Sidebar() {
             </Link>
           </li>
           <li
-            className={location.pathname === "/loginpage" ? "active-link" : ""}
+            className={location.pathname === "/loginpage" ? "active-link" : ""}  onClick={logOut}
           >
-            <Link
-              to="/loginpage"
-              className={
-                location.pathname === "/loginpage" ? "active-link" : ""
-              }
-            >
+            
               <i
                 className={`fa fa-sign-out${
                   location.pathname === "/loginpage" ? " active-link" : ""
                 }`}
               />
               Log Out
-            </Link>
           </li>
         </ul>
       </aside>
