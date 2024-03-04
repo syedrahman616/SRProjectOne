@@ -3,6 +3,7 @@ import Dashnavbar from "./customernavbar";
 import Sidebar from "./customersidebar";
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 function Customerjobs(){
@@ -12,7 +13,7 @@ function Customerjobs(){
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
   const [statusFilter, setStatusFilter] = useState("All"); // Default filter
   const [jobId, setJobId] = useState(null);
-
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleCloses1 = () => {
@@ -92,7 +93,6 @@ function Customerjobs(){
       const image2='test';
       const vedio='testing';
       const flag=formData.flag;
-      console.log(flag);
       let data;
       if(flag == 'add')
       {
@@ -218,7 +218,11 @@ function Customerjobs(){
    });
   }
   
-  
+  // View Plumber
+
+  const viewPlumber =(id) => {
+      navigate ("/customer/plumber" ,{ state: {id} })
+  }
 
 
   return (
@@ -291,11 +295,8 @@ function Customerjobs(){
                       <button className="view" onClick = {() => viewJob(jobs)}>View<i className="fa fa-file" style={{ marginLeft:'6px',fontSize:'16px' }}></i></button>
                       <button className="view view-yellow" onClick = {() => editJob(jobs)}>Edit<i className="fa fa-edit " style={{ marginLeft:'6px',fontSize:'16px' }}></i></button>
                       <button className="view view-red" onClick={() => deleteJob(jobs.id)}>Delete<i className="fa fa-trash  " style={{ marginLeft:'6px',fontSize:'16px' }}></i></button>
-                      <a href="/customer/plumber"><button className="view" onClick = {() => viewJob(jobs)}>View Plumber<i className="fa fa-user" style={{ marginLeft:'6px',fontSize:'16px' }}></i></button></a>
-                      {/* <button className="mt-2 btn btn-primary flex items-center" style={{ width:'100%' }} onClick = {() => viewJob(jobs)} title="View">View <i className="fa fa-eye " style={{ marginLeft:'6px',fontSize:'16px' }}></i></button> */}
-                      {/* <button className="mt-2 btn btn-warning flex items-center" onClick = {() => editJob(jobs)} title="Edit">Edit <i className="fa fa-edit ml-1"></i></button>
-                      <button className="mt-2 btn btn-danger flex items-center" onClick={() => deleteJob(jobs.id)}  title="Delete">Delete <i className="fa fa-trash ml-1"></i></button>
-                      <a href="/customer/plumber"><button className="mt-2 btn btn-danger flex items-center" title="Delete">View Plumber<i className="ml-1"></i></button></a> */}
+                      <button className="view" onClick = {() =>viewPlumber(jobs.id)}>View Plumber<i className="fa fa-user" style={{ marginLeft:'6px',fontSize:'16px' }}></i></button>
+                     
                     </td>
                   </tr>
                    ))}
@@ -306,6 +307,7 @@ function Customerjobs(){
         </div>
       </div>
     </div>
+
     <Modal show={show1} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={handleCloses1} centered>
       <Modal.Body style={{ margin: '0', padding: '0' }}>
         <div className="modalpad">
@@ -327,12 +329,16 @@ function Customerjobs(){
             <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
           </div> */}
           <div className="mt-3">
-            <label className="mb-2">PostCode:</label>
-            <input type="text" name="postCode" value={formData.postCode}  onChange={handleInputChange} className="form-control"></input>
-          </div>
-          <div className="mt-3">
-            <label className="mb-2">Description:</label>
-            <input type="text" name="description" value={formData.description}  onChange={handleInputChange} className="form-control"></input>
+            <div className="row">
+              <div className="col-6">
+                <label className="mb-2">PostCode:</label>
+                <input type="text" name="postCode" value={formData.postCode}  onChange={handleInputChange} className="form-control"></input>
+              </div>
+              <div className="col-6">
+              <label className="mb-2">Description:</label>
+                   <input type="text" name="description" value={formData.description}  onChange={handleInputChange} className="form-control"></input>
+              </div>
+            </div>
           </div>
           <div className="mt-3">
             <label className="mb-2">Image File:</label>

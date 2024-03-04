@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import Dashnavbar from "./plumbernavbar";
 import Sidebar from "./plumbersidebar";
+import axios from "axios";
 
 function Dashcustomerjobs() {
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
@@ -10,12 +11,7 @@ function Dashcustomerjobs() {
   const [offers, setOffers] = useState({});
   const [assignedJobs, setAssignedJobs] = useState({});
 
-  const [jobs, setJobs] = useState([
-    // Sample job data
-    { id: 1, customerName: "John Doe", plumbingIssue: "Leaky faucet", description: "The faucet in the kitchen is leaking.", plumber: null },
-    { id: 2, customerName: "Jane Smith", plumbingIssue: "Clogged drain", description: "The bathroom sink drain is clogged.", plumber: null },
-  ]);
-
+  
   const handleSearchChange = (query) => {
     setSearchQuery(query);
   };
@@ -45,6 +41,31 @@ function Dashcustomerjobs() {
     }
   };
 
+  //get invitetion jobs
+  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/plumber-job-invitation";
+  const [inviteJobs, setInviteJobs] = useState([]); 
+  var token = localStorage.getItem('accessToken');
+
+  const invitejobs= async() => {
+    try{
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const response = await axios.get(apiurl,{headers});
+      if(response.status===200){
+        console.log(response.data.data);
+        setInviteJobs(response.data.data); 
+      }
+    }catch(error){
+        console.log(error);
+    }
+  }
+
+  useEffect(() =>{
+    invitejobs();
+  },[])
+
   return (
     <>
       <Dashnavbar />
@@ -71,6 +92,7 @@ function Dashcustomerjobs() {
               <div className="table-responsive">
                 <table className="table table-bordered mt-3">
                   <thead>
+                    
                     <tr>
                       <th scope="col">No</th>
                       <th scope="col">Customer Name</th>
@@ -82,33 +104,34 @@ function Dashcustomerjobs() {
                     </tr>
                   </thead>
                   <tbody>
-                    {jobs.map((job, index) => (
+                  {inviteJobs.map((jobs, index) => (
+
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
-                        <td>{job.customerName}</td>
-                        <td>{job.plumbingIssue}</td>
-                        <td>{job.description}</td>
+                        <td>{jobs.customerName}</td>
+                        <td>{jobs.jobTitle}</td>
+                        <td>{jobs.description}</td>
                         <td>
                           <input
                             type="text"
-                            value={prices[job.id] || ""}
-                            onChange={(e) => handlePriceChange(job.id, e.target.value)}
+                            value={prices[jobs.id] || ""}
+                            onChange={(e) => handlePriceChange(jobs.id, e.target.value)}
                             className="form-control"
                           />
                         </td>
                         <td>
                           <input
                             type="text"
-                            value={offers[job.id] || ""}
-                            onChange={(e) => handleOfferChange(job.id, e.target.value)}
+                            value={offers[jobs.id] || ""}
+                            onChange={(e) => handleOfferChange(jobs.id, e.target.value)}
                             className="form-control"
-                          />
+                          /> 
                         </td>
                         <td>
-                          {job.plumber ? (
-                            <span>Assigned to: {job.plumber}</span>
+                          {jobs.plumber ? (
+                            <span>Assigned to: {jobs.plumber}</span>
                           ) : (
-                            <button onClick={() => applyForJob(job.id)} className="btn btn-primary">Apply</button>
+                            <button onClick={() => applyForJob(jobs.id)} className="btn btn-primary">Apply</button>
                           )}
                         </td>
                       </tr>
