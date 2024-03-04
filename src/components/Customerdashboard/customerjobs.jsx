@@ -7,6 +7,8 @@ import axios from "axios";
 
 function Customerjobs(){
   const [show1, setShow1] = useState(false);
+  const [editshow, seteditshow] = useState(false);
+  const [viewshow, setviewshow] = useState(false);
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
   const [statusFilter, setStatusFilter] = useState("All"); // Default filter
   const [jobId, setJobId] = useState(null);
@@ -15,6 +17,14 @@ function Customerjobs(){
 
   const handleCloses1 = () => {
     setShow1(false);
+  };
+
+  const handleCloses2 = () => {
+    seteditshow(false);
+  };
+
+  const handleCloses3 = () => {
+    setviewshow(false);
   };
 
   const addnew_plumber = () => {
@@ -29,6 +39,8 @@ function Customerjobs(){
     setSearchQuery(query);
   };
 
+
+  //get Jobs//
  
   const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/customer-jobs";
   const [customerjobsData, setCustomerjobData] = useState([]); 
@@ -54,14 +66,16 @@ function Customerjobs(){
     customerjobs();
   },[])
 
+  //add new jobs and edit function
+
   const [formData, setFormData] = useState({
+    jobTitle:"",
     address: "",
-    // description: "",
-    postCode: ""
+    description: "",
+    postCode: "",
+    flag:""
   });
 
-
-   //add new jobs
 
    const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -77,18 +91,38 @@ function Customerjobs(){
       const image1='test';
       const image2='test';
       const vedio='testing';
-      const flag='add';
-      const description='343';
+      const flag=formData.flag;
+      console.log(flag);
+      let data;
+      if(flag == 'add')
+      {
+         data = {
+          address: formData.address,
+          jobTitle: formData.jobTitle,
+          postCode: formData.postcode,
+          description:formData.description,
+          image1: image1,
+          image2: image2,
+          vedio: vedio,
+          flag: flag,
+        };
+      }
+      else
+      {
+         data = {
+                    address: formData.address,
+                    jobTitle: formData.jobTitle,
+                    postCode: formData.postcode,
+                    description:formData.description,
+                    customerId:formData.customerId,
+                    id:formData.id,
+                    image1: image1,
+                    image2: image2,
+                    vedio: vedio,
+                    flag: flag,
+         };
+      }
 
-      const data = {
-        address: formData.address,
-        postCode: formData.postcode,
-        description:description,
-        image1: image1,
-        image2: image2,
-        vedio: vedio,
-        flag: flag,
-      };
       const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -96,15 +130,27 @@ function Customerjobs(){
       const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/add-job";
       const response = await axios.post(apiurl, data,{headers});
 
-      console.log(response);
+      console.log(response.data);
       if (response.status === 200) {
         setShow1(false);
-        setFormData({
-          ...formData,
-          jobStatus: "success"
-        });
+        customerjobs();
+        if(response.data.message=='Edited Successfully')
+        {
+          setFormData({
+            ...formData,
+            jobEditStatus: "success"
+          });
+
+        }
+        else
+        {
+          setFormData({
+            ...formData,
+            jobStatus: "success"
+          });
+        }
       } else {
-        console.error("Registration failed");
+        console.error("Failed");
       }
     } catch (error) {
       console.error("Error registering user:", error);
@@ -131,6 +177,10 @@ function Customerjobs(){
       const response = await axios.post(apiurl_delete,data,{headers});
       if(response.status===200){
         customerjobs();
+        setFormData({
+          ...formData,
+          jobDeleteStatus: "success"
+        });
         console.log(response);
       }
     }catch(error){
@@ -138,6 +188,37 @@ function Customerjobs(){
     }
   };
 
+  //Edit job details get//
+
+  const editJob =(jobs) =>{
+    seteditshow(true);
+    const flag2='edit';
+    setFormData({
+      jobTitle: jobs.jobTitle,
+      address: jobs.address,
+      postCode: jobs.postCode,
+      id: jobs.id,
+      description: jobs.description,
+      customerId: jobs.customerId,
+      flag:flag2
+    });
+  }
+
+  //View job details here
+
+  const viewJob =(jobs) =>{
+    setviewshow(true);
+    setFormData({
+      jobTitle: jobs.jobTitle,
+      address: jobs.address,
+      postCode: jobs.postCode,
+      id: jobs.id,
+      description: jobs.description,
+      customerId: jobs.customerId,
+   });
+  }
+  
+  
 
 
   return (
@@ -152,6 +233,16 @@ function Customerjobs(){
         {formData.jobStatus === "success" && (
               <div className="alert alert-success" role="alert">
                 Jobs added successfully!
+              </div>
+            )}
+            {formData.jobEditStatus === "success" && (
+              <div className="alert alert-success" role="alert">
+                Updated successfully!
+              </div>
+            )}
+             {formData.jobDeleteStatus === "success" && (
+              <div className="alert alert-success" role="alert">
+                Jobs Deleted successfully!
               </div>
             )}
           <div className="dashmain">
@@ -193,14 +284,18 @@ function Customerjobs(){
                         onChange={(e) => handleStatusFilterChange(e.target.value)}
                       >
                         <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
+                        <option valu e="Inactive">Inactive</option>
                       </select>
                     </td>
                     <td className="flex-column gap-2">
-                      <button className="mt-2 btn btn-primary flex items-center"onClick={() => deleteJob1(jobs.id)} title="View">View <i className="fa fa-eye ml-1"></i></button>
-                      <button className="mt-2 btn btn-warning flex items-center" title="Edit">Edit <i className="fa fa-edit ml-1"></i></button>
+                      <button className="view" onClick = {() => viewJob(jobs)}>View<i className="fa fa-file" style={{ marginLeft:'6px',fontSize:'16px' }}></i></button>
+                      <button className="view view-yellow" onClick = {() => editJob(jobs)}>Edit<i className="fa fa-edit " style={{ marginLeft:'6px',fontSize:'16px' }}></i></button>
+                      <button className="view view-red" onClick={() => deleteJob(jobs.id)}>Delete<i className="fa fa-trash  " style={{ marginLeft:'6px',fontSize:'16px' }}></i></button>
+                      <a href="/customer/plumber"><button className="view" onClick = {() => viewJob(jobs)}>View Plumber<i className="fa fa-user" style={{ marginLeft:'6px',fontSize:'16px' }}></i></button></a>
+                      {/* <button className="mt-2 btn btn-primary flex items-center" style={{ width:'100%' }} onClick = {() => viewJob(jobs)} title="View">View <i className="fa fa-eye " style={{ marginLeft:'6px',fontSize:'16px' }}></i></button> */}
+                      {/* <button className="mt-2 btn btn-warning flex items-center" onClick = {() => editJob(jobs)} title="Edit">Edit <i className="fa fa-edit ml-1"></i></button>
                       <button className="mt-2 btn btn-danger flex items-center" onClick={() => deleteJob(jobs.id)}  title="Delete">Delete <i className="fa fa-trash ml-1"></i></button>
-                      <a href="customer/plumber"><button className="mt-2 btn btn-danger flex items-center" title="Delete">View Plumber<i className="ml-1"></i></button></a>
+                      <a href="/customer/plumber"><button className="mt-2 btn btn-danger flex items-center" title="Delete">View Plumber<i className="ml-1"></i></button></a> */}
                     </td>
                   </tr>
                    ))}
@@ -216,8 +311,53 @@ function Customerjobs(){
         <div className="modalpad">
           <h5>Add New Jobs</h5>
           <div className="mt-3">
+            <div className="row">
+            <div className="col-6">
             <label className="mb-2">Plumbing Issue:</label>
-            <input type="text" name=""  className="form-control"></input>
+            <input type="text" value={formData.jobTitle} onChange={handleInputChange}className="form-control"></input>
+            </div>
+            <div className="col-6">
+            <label className="mb-2">Address:</label>
+            <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
+            </div>
+            </div>
+          </div>
+          {/* <div className="mt-3">
+            <label className="mb-2">Address:</label>
+            <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
+          </div> */}
+          <div className="mt-3">
+            <label className="mb-2">PostCode:</label>
+            <input type="text" name="postCode" value={formData.postCode}  onChange={handleInputChange} className="form-control"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Description:</label>
+            <input type="text" name="description" value={formData.description}  onChange={handleInputChange} className="form-control"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Image File:</label>
+            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Vedio File:</label>
+            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+          </div>
+
+          <div className="d-flex justify-content-end mt-3 align-items-center">
+            <button className="modalclose me-3">Cancel</button>
+            <button className="modalsave" onClick={handleSubmit}>Save</button>
+          </div>
+        </div>
+      </Modal.Body>
+    </Modal>
+
+    <Modal show={editshow} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={handleCloses2} centered>
+      <Modal.Body style={{ margin: '0', padding: '0' }}>
+        <div className="modalpad">
+          <h5>Edit Jobs</h5>
+          <div className="mt-3">
+            <label className="mb-2">Plumbing Issue:</label>
+            <input type="text" value={formData.jobTitle} onChange={handleInputChange}  name="jobTitle" className="form-control"></input>
           </div>
           <div className="mt-3">
             <label className="mb-2">Address:</label>
@@ -229,7 +369,7 @@ function Customerjobs(){
           </div>
           <div className="mt-3">
             <label className="mb-2">Description:</label>
-            <input type="text" name="description"  className="form-control"></input>
+            <input type="text" name="description"  value={formData.description}  onChange={handleInputChange}  className="form-control"></input>
           </div>
           <div className="mt-3">
             <label className="mb-2">Image File:</label>
@@ -239,7 +379,8 @@ function Customerjobs(){
             <label className="mb-2">Vedio File:</label>
             <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
           </div>
-          
+          <input type="hidden" className="form-control" name="id" value={formData.id}></input>
+
           <div className="d-flex justify-content-end mt-3 align-items-center">
             <button className="modalclose me-3">Cancel</button>
             <button className="modalsave" onClick={handleSubmit}>Save</button>
@@ -247,8 +388,46 @@ function Customerjobs(){
         </div>
       </Modal.Body>
     </Modal>
+
+    <Modal show={viewshow} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={handleCloses3} centered>
+      <Modal.Body style={{ margin: '0', padding: '0' }}>
+        <div className="modalpad">
+          <h5>View Jobs</h5>
+          <div className="mt-3">
+            <label className="mb-2">Plumbing Issue:</label>
+            <input type="text" value={formData.jobTitle} onChange={handleInputChange}  name="jobTitle" className="form-control"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Address:</label>
+            <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">PostCode:</label>
+            <input type="text" name="postCode" value={formData.postCode}  onChange={handleInputChange} className="form-control"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Description:</label>
+            <input type="text" name="description"  value={formData.description}  onChange={handleInputChange}  className="form-control"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Image File:</label>
+            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Vedio File:</label>
+            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+          </div>
+          <input type="hidden" className="form-control" name="id" value={formData.id}></input>
+
+          <div className="d-flex justify-content-end mt-3 align-items-center">
+            {/* <button className="modalclose me-3">Cancel</button>
+            <button className="modalsave" onClick={handleSubmit}>Save</button> */}
+          </div>
+        </div>
+      </Modal.Body>
+    </Modal>
   </>
-);
+); 
 }
 
 
