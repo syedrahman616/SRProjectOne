@@ -10,6 +10,11 @@ function Customerjobs(){
   const [show1, setShow1] = useState(false);
   const [editshow, seteditshow] = useState(false);
   const [viewshow, setviewshow] = useState(false);
+  const [image, setImage] = useState("");
+  const [image1, setImage1] = useState("");
+  const [vedio, setVedio] = useState("");
+
+
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
   const [statusFilter, setStatusFilter] = useState("All"); // Default filter
   const [jobId, setJobId] = useState(null);
@@ -89,9 +94,10 @@ function Customerjobs(){
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const image1='test';
-      const image2='test';
-      const vedio='testing';
+      // const image1='test';
+      // const image2='test';
+      // const vedio='testing';
+      console.log(image,image1,vedio);
       const flag=formData.flag;
       let data;
       if(flag == 'add')
@@ -101,8 +107,8 @@ function Customerjobs(){
           jobTitle: formData.jobTitle,
           postCode: formData.postcode,
           description:formData.description,
-          image1: image1,
-          image2: image2,
+          image1: image,
+          image2: image1,
           vedio: vedio,
           flag: flag,
         };
@@ -157,7 +163,62 @@ function Customerjobs(){
     }
   };
 
+
   //end
+
+  //file Upload
+  const uploadFile = async (fieldName) => {
+    try {
+      const fileInput = document.querySelector('input[type="file"]');
+      const fileName = fileInput.getAttribute('name');
+      
+      console.log(fileName);
+      const file = fileInput.files[0];
+  
+      if (!file) {
+        console.error("No file selected.");
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data', 
+      }
+  
+      const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/upload-files";
+      const response = await axios.post(apiurl, formData, { headers });
+  
+      console.log(response.data);
+      if (response.status === 200) {
+        const image = response.data.data;
+          if(fieldName == 'image1')
+          {
+            setImage(image);
+          }
+
+          if(fieldName == 'image2')
+          {
+            setImage1(image);
+          }
+
+          if(fieldName == 'vedio')
+          {
+            setVedio(image);
+
+          }
+          
+      } else {
+        console.error("Failed");
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
+  
+
 
   //...Delete Function...//
 
@@ -315,19 +376,16 @@ function Customerjobs(){
           <div className="mt-3">
             <div className="row">
             <div className="col-6">
-            <label className="mb-2">Plumbing Issue:</label>
-            <input type="text" value={formData.jobTitle} onChange={handleInputChange}className="form-control"></input>
+              <label className="mb-2">Plumbing Issue:</label>
+              <input type="text" name="jobTitle" value={formData.jobTitle} onChange={handleInputChange} className="form-control"></input>
             </div>
             <div className="col-6">
-            <label className="mb-2">Address:</label>
-            <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
+              <label className="mb-2">Address:</label>
+              <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
             </div>
             </div>
           </div>
-          {/* <div className="mt-3">
-            <label className="mb-2">Address:</label>
-            <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
-          </div> */}
+        
           <div className="mt-3">
             <div className="row">
               <div className="col-6">
@@ -342,11 +400,20 @@ function Customerjobs(){
           </div>
           <div className="mt-3">
             <label className="mb-2">Image File:</label>
-            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+            <input type="file" name="image1" className="form-control" accept="image/png, image/jpeg"></input>
+            <button onClick={() => uploadFile('image1')} className="btn btn-primary">Upload</button>
+
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Image File2:</label>
+            <input type="file" className="form-control" name="image2" accept="image/png, image/jpeg"></input>
+            <button onClick={() => uploadFile('image2')} className="btn btn-primary">Upload</button>
+
           </div>
           <div className="mt-3">
             <label className="mb-2">Vedio File:</label>
-            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+            <input type="file" className="form-control" name="vedio" accept="image/png, image/jpeg"></input>
+            <button onClick={() => uploadFile('video')} className="btn btn-primary">Upload</button>
           </div>
 
           <div className="d-flex justify-content-end mt-3 align-items-center">
@@ -401,7 +468,7 @@ function Customerjobs(){
           <h5>View Jobs</h5>
           <div className="mt-3">
             <label className="mb-2">Plumbing Issue:</label>
-            <input type="text" value={formData.jobTitle} onChange={handleInputChange}  name="jobTitle" className="form-control"></input>
+            <input type="text"  name="jobTitle" value={formData.jobTitle} onChange={handleInputChange} className="form-control"></input>
           </div>
           <div className="mt-3">
             <label className="mb-2">Address:</label>
@@ -417,6 +484,10 @@ function Customerjobs(){
           </div>
           <div className="mt-3">
             <label className="mb-2">Image File:</label>
+            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Image File 2:</label>
             <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
           </div>
           <div className="mt-3">

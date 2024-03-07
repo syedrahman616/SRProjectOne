@@ -54,25 +54,7 @@ function Sidebar() {
               Dashboard
             </Link>
           </li>
-          <li
-            className={
-              location.pathname === "/admin/plumberjobs" ? "active-link" : ""
-            }
-          >
-            <Link
-              to="/admin/plumberjobs"
-              className={
-                location.pathname === "/admin/plumberjobs" ? "active-link" : ""
-              }
-            >
-              <i
-                className={`fa fa-briefcase${
-                  location.pathname === "/admin/plumberjobs" ? " active-link" : ""
-                }`}
-              />
-              Plumber Orders
-            </Link>
-          </li>
+         
           <li
             onClick={() => toggleDropdown("plumbers")}
             className={`dropdown ${
@@ -127,6 +109,25 @@ function Sidebar() {
               </li>
             </>
           )}
+           <li
+            className={
+              location.pathname === "/admin/plumberjobs" ? "active-link" : ""
+            }
+          >
+            <Link
+              to="/admin/plumberjobs"
+              className={
+                location.pathname === "/admin/plumberjobs" ? "active-link" : ""
+              }
+            >
+              <i
+                className={`fa fa-briefcase${
+                  location.pathname === "/admin/plumberjobs" ? " active-link" : ""
+                }`}
+              />
+              Finished Jobs
+            </Link>
+          </li>
           <li className={location.pathname === "/review" ? "active-link" : ""}>
             <Link
               to="/review"

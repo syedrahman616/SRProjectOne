@@ -3,6 +3,7 @@ import Dashnavbar from "./dashnavbar";
 import Sidebar from "./dashsidebar";
 import Modal from "react-bootstrap/Modal";
 import { BsSearch } from "react-icons/bs";
+import axios from "axios";
 
 function DashPlumberJobs() {
   const [show1, setShow1] = useState(false);
@@ -14,33 +15,7 @@ function DashPlumberJobs() {
   const applyForJob = (jobId) => {
     console.log(`Applied for job with ID: ${jobId}`);
   };
-  const fetchJobs = () => {
-    const fetchedJobs = [
-      {
-        id: 1,
-        customerName: "John Doe",
-        address: "123 Main St",
-        plumbingIssue: "Leaky faucet",
-        description: "The faucet in the kitchen is leaking.",
-        startDate: "2024-02-08",
-        status: "Pending",
-      },
-      {
-        id: 2,
-        customerName: "Jane Smith",
-        address: "456 Elm St",
-        plumbingIssue: "Clogged drain",
-        description: "The bathroom sink drain is clogged.",
-        startDate: "2024-02-10",
-        status: "In Progress",
-      },
-    ];
-    setJobs(fetchedJobs);
-  };
-  useEffect(() => {
-    fetchJobs();
-  }, []);
-
+  
   const handleCloses1 = () => {
     setShow1(false);
   };
@@ -69,6 +44,32 @@ function DashPlumberJobs() {
       job.status === statusFilter
     );
   });
+
+  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/finished-admin-jobs";
+  const [adminJobs, setAdminJobs] = useState([]); 
+
+  var token = localStorage.getItem('accessToken');
+
+
+  const adminfinishedjobs = async() => {
+    try{
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const response = await axios.get(apiurl,{headers});
+      if(response.status===200){
+        setAdminJobs(response.data.data); 
+        console.log('checking',response.data.data);
+      }
+    }catch(error){
+        console.log(error);
+    }
+  }
+
+  useEffect(() =>{
+    adminfinishedjobs();
+  },[])
 
   return (
     <>
@@ -118,36 +119,26 @@ function DashPlumberJobs() {
                   <thead>
                     <tr>
                       <th scope="col">No</th>
-                      <th scope="col">Customer Name</th>
+                      <th scope="col">Customer Names</th>
                       <th scope="col">Address</th>
                       <th scope="col">Plumbing Issue</th>
                       <th scope="col">Description</th>
                       <th scope="col">Start Date</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Action</th>
+                      <th scope="col">End Date</th>
+                      <th scope="col">Price</th>
                     </tr>
                   </thead>
-                  <tbody >
-                    {filteredJobs.map((job, index) => (
-                      <tr key={job.id}>
+                  <tbody>
+                  {adminJobs.map((jobs, index) => (
+                      <tr>
                         <th scope="row">{index + 1}</th>
-                        <td>{job.customerName}</td>
-                        <td>{job.address}</td>
-                        <td>{job.plumbingIssue}</td>
-                        <td>{job.description}</td>
-                        <td>{job.startDate}</td>
-                        <td>{job.status}</td>
-                        <td className="action-table">
-                          <button className="btn btn-primary" title="View">
-                            View <i className="fa fa-eye"></i>
-                          </button>
-                          <button className="mt-2 btn btn-warning me-2" title="Edit">
-                            Edit <i className="fa fa-edit"></i>
-                          </button>
-                          <button className="mt-2 btn btn-danger flex items-center" title="Delete">
-                            Delete <i className="fa fa-trash ml-1"></i>
-                          </button>
-                        </td>
+                        <td>{jobs.customerName}</td>
+                        <td>{jobs.address}</td>
+                        <td>{jobs.jobTitle}</td>
+                        <td>{jobs.description}</td>
+                        <td>{jobs.customerStartDate}</td>
+                        <td>{jobs.customerEndDate}</td>
+                        <td>{jobs.fixedPrice}</td>
                       </tr>
                     ))}
                   </tbody>

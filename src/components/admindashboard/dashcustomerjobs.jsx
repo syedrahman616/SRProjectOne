@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Dashnavbar from "./dashnavbar";
 import Sidebar from "./dashsidebar";
 import Modal from "react-bootstrap/Modal";
+import axios from "axios";
 
 function Dashcustomerjobs() {
   const [show1, setShow1] = useState(false);
@@ -12,21 +13,7 @@ function Dashcustomerjobs() {
   const handleCloses1 = () => {
     setShow1(false);
   };
-  const sampleDetails = [
-    {
-      customerName: "John Doe",
-      address: "123 Main St",
-      plumbingIssue: "Leaky faucet",
-      description: "The faucet in the kitchen is leaking.",
-    },
-    {
-      customerName: "Jane Smith",
-      address: "456 Elm St",
-      plumbingIssue: "Clogged drain",
-      description: "The bathroom sink drain is clogged.",
-    },
-    // Add more sample details as needed
-  ];
+ 
 
   const addnew_plumber = () => {
     setShow1(true);
@@ -39,6 +26,32 @@ function Dashcustomerjobs() {
   const handleSearchChange = (query) => {
     setSearchQuery(query);
   };
+
+  const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-jobs";
+  const [adminJobs, setAdminJobs] = useState([]); 
+
+  var token = localStorage.getItem('accessToken');
+
+
+  const adminjobs = async() => {
+    try{
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const response = await axios.get(apiurl,{headers});
+      if(response.status===200){
+        setAdminJobs(response.data.data); 
+      }
+    }catch(error){
+        console.log(error);
+    }
+  }
+
+  useEffect(() =>{
+     adminjobs();
+  },[])
+
 
   return (
     <>
@@ -89,15 +102,16 @@ function Dashcustomerjobs() {
                     </tr>
                   </thead>
                   <tbody>
-                    {sampleDetails.map((detail, index) => (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{detail.customerName}</td>
-                        <td>{detail.address}</td>
-                        <td>{detail.plumbingIssue}</td>
-                        <td>{detail.description}</td>
+                  {adminJobs.map((job, index) => (
+
+                      <tr>
+                        <th scope="row"></th>
+                        <td></td>
+                        <td>{job.address}</td>
+                        <td>{job.jobTitle}</td>
+                        <td>{job.description}</td>
                       </tr>
-                    ))}
+                  ))}
                   </tbody>
                 </table>
               </div>

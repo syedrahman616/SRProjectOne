@@ -21,6 +21,7 @@ import Cusotmerjobs from "./components/Customerdashboard/customerjobs";
 import Customerplumber from "./components/Customerdashboard/customerplumber";
 import AllJobs from "./components/plumberdashboard/allJobs";
 import Plumber from "./components/Customerdashboard/plumber";
+import Design from "./components/design/sidebar";
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
           <Route path="/plumber/invitejobs" element={<PlumberJobs/>}/> 
           <Route path="/plumber/alljobs" element={<AllJobs/>}/>
           <Route path="/customer/plumber" element={<Plumber />} />
+          <Route path="/design" element={<Design/>}/>
       </Routes>
     </Router>
   );

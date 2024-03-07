@@ -60,7 +60,9 @@ function Login() {
       const response = await axios.post(apiurl, data, { headers });
   
       if (response.status === 200) {
+        console.log(response);
         const responseData = response.data;
+
         const userRole1 = responseData.data.userRole;
          localStorage.setItem('accessToken',responseData.data.accessToken);
          localStorage.setItem('userRole',userRole1);

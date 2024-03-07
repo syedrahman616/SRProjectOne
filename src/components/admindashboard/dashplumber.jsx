@@ -6,14 +6,18 @@ import axios from "axios";
 
 function Dashplumber() {
   const [show1, setShow1] = useState(false);
+  const [viewshow, setviewShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const [plumberId, setPlumberId] = useState(null);
   const [statusFilter, setStatusFilter] = useState("All"); 
   const [searchQuery, setSearchQuery] = useState("");
+  const [plumberdeleteId, setplumberdeleteId] = useState(null);
+
   const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-plumber";
   const [plumberData, setPlumberData] = useState([]); 
 
   var token = localStorage.getItem('accessToken');
+
 
   const plumberget = async() => {
     try{
@@ -57,6 +61,10 @@ function Dashplumber() {
 
   const handleCloses2 = () => {
     setShow2(false);
+  };
+
+  const viewClose = () => {
+    setviewShow(false);
   };
 
   const admin_approve= (id) => {
@@ -156,6 +164,50 @@ function Dashplumber() {
   };
   //end
 
+  //View job details here
+
+  const viewJob=(plumber) =>{
+    setviewShow(true);
+    setFormData({
+      firstName: plumber.firstName,
+      lastName: plumber.lastName,
+      address: plumber.address,
+      city: plumber.city,
+      mobile: plumber.mobile,
+      postcode: plumber.postCode,
+      email: plumber.userEmail,
+   });
+  }
+
+  //...Delete Function...//
+
+  const deletePlumber = async(id) => {
+    setplumberdeleteId(id);
+    const apiurl_delete = "https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-plumber-profile";
+    const flag ='delete';
+    try{
+      const data = {
+        id: id,
+        flag: flag,
+      };
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const response = await axios.post(apiurl_delete,data,{headers});
+      if(response.status===200){
+        console.log(response);
+        plumberget();
+        setFormData({
+          ...formData,
+          DeleteStatus: "success"
+        });
+      }
+    }catch(error){
+        console.log(error);
+    }
+  };
+
   return (
     <>
 
@@ -174,6 +226,11 @@ function Dashplumber() {
              {formData.adminApprove === "success" && (
               <div className="alert alert-success" role="alert">
                 Approved successfully!
+              </div>
+            )}
+             {formData.DeleteStatus === "success" && (
+              <div className="alert alert-success" role="alert">
+                Deleted successfully!
               </div>
             )}
             <div className="dashmain">
@@ -234,19 +291,29 @@ function Dashplumber() {
                       <td>
                         <select
                           className="form-select"
-                          value={statusFilter}
+                           value={statusFilter}
                           onChange={(e) => handleStatusFilterChange(e.target.value)}
                         >
                           <option value="Active">Active</option>
                           <option value="Inactive">Inactive</option>
                         </select>
                       </td>
-                      <td >
-                        <button className="btn btn-success me-2" title="View" onClick={() => admin_approve(plumber.plumberId)}>Approve<i className="fa fa-eye"></i></button>
-                        <button className="btn btn-primary me-2" title="View">View <i className="fa fa-eye"></i></button>
-                        <button className="btn btn-warning me-2" title="Edit">Edit <i className="fa fa-edit"></i></button>
-                        <button className="btn btn-danger" title="Delete">Delete <i className="fa fa-trash"></i></button>
+                      <td>
+                      <div class="dropdown">
+                        <a href="#" data-bs-toggle="dropdown"
+                           class="btn btn-floating"
+                           aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a href="#"  onClick={() => admin_approve(plumber.plumberId)}class="dropdown-item">Approve</a>
+                            <a href="#"  onClick = {() => viewJob(plumber)} class="dropdown-item">View</a>
+                            <a href="#"  onClick = {() => editPlumber(plumber)} class="dropdown-item">Edit</a>
+                            <a href="#" onClick={() => deletePlumber(plumber.id)} class="dropdown-item text-danger">Delete</a>
+                        </div>
+                      </div>
                       </td>
+                     
                     </tr>
                   ))}
                   </tbody>
@@ -306,6 +373,45 @@ function Dashplumber() {
               <button className="modalclose me-3" >Cancel</button>
               <button  className="modalsave" onClick={approveSubmit}>Save</button>
             </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={viewshow} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={viewClose} centered>
+        <Modal.Body style={{ margin: '0', padding: '0' }}>
+          <div className="modalpad">
+            <h5>View Plumber</h5>
+            <div className="mt-3">
+              <label className="mb-2">Enter Name:</label>
+              <input type="text" name="firstName" value={formData.firstName}  onChange={handleInputChange} className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter LastName:</label>
+              <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Email:</label>
+              <input type="text"  name="email" value={formData.email} onChange={handleInputChange} className="form-control"></input>
+            </div>
+        
+            {/* <div className="mt-3">
+              <label className="mb-2">Enter Password:</label>
+              <input type="text" name="password" value={formData.password} onChange={handleInputChange}className="form-control"></input>
+            </div> */}
+            <div className="mt-3">
+              <label className="mb-2">Enter Mobile Number:</label>
+              <input type="text" name="mobile" value={formData.mobile} onChange={handleInputChange}className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Address:</label>
+              <input type="text" name="address" value={formData.address} onChange={handleInputChange}
+               className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Postcode:</label>
+              <input type="text" name="postcode"  value={formData.postcode} onChange={handleInputChange}className="form-control"></input>
+            </div>
+           
           </div>
         </Modal.Body>
       </Modal>
