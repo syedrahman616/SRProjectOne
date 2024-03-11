@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 import Landing_page from "./components/landingpages/landingpage";
 import Login from "./components/Authlogin/loginpage";
 import Signup from "./components/Authlogin/signuppage";
@@ -25,10 +26,13 @@ import Design from "./components/design/sidebar";
 import Quotes from "./components/plumberdashboard/plumberQutoes";
 import Finishedjobs from "./components/plumberdashboard/finishedJobs";
 import CustomerFinishedJobs from "./components/Customerdashboard/finishedJobs";
+import { ToastContainer } from "react-toastify";
 
 
 function App() {
   return (
+    <>
+    <ToastContainer/>
     <Router>
       <Routes>
         <Route path="/" element={<Landing_page />} />
@@ -57,8 +61,10 @@ function App() {
           <Route path="/check" element={<Quotes />} />
           <Route path="/plumber/finishedjobs" element={<Finishedjobs />} />
           <Route path="/customer/finishedjobs" element={<CustomerFinishedJobs />}/>
+          <Route path="/customer/quotes" element={<customerQuotes />} />
       </Routes>
     </Router>
+    </>
   );
 }
 

@@ -3,6 +3,7 @@ import "./admin.css";
 import Img5 from "../../assets/women/plumbing_19 [Converted]-01.png";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -47,6 +48,16 @@ function Signup() {
       console.log(response);
       if (response.status === 200) {
         console.log("User registered successfully");
+        toast.error(error.response.data.mobile_error, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         setFormData({
           ...formData,
           registrationStatus: "success"
@@ -62,7 +73,11 @@ function Signup() {
     <>
       <div className="sign100 signpad">
         <div className="loginpagecenter1">
-        
+        {formData.registrationStatus === "success" && (
+            <div className="alert alert-success" role="alert">
+              User registered successfully!
+            </div>
+          )}
           <div className="row p-2">
             <div className="col-6">
               <img
@@ -229,9 +244,7 @@ function Signup() {
                     <option value="Customer" data-icon="fa fa-users">
                       Customer
                     </option>
-                    <option value="Admin" data-icon="fa fa-cog">
-                      Admin
-                    </option>
+                    
                   </select>
                 </div>
               </div>
@@ -240,11 +253,7 @@ function Signup() {
                   Register
                 </button>
               </div>
-              {formData.registrationStatus === "success" && (
-            <div className="alert alert-success" role="alert">
-              User registered successfully!
-            </div>
-          )}
+              
             </div>
           </div>
         </div>

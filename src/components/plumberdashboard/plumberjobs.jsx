@@ -174,8 +174,8 @@ function Dashcustomerjobs() {
                     </tr>
                   </thead>
                   <tbody>
-                  {inviteJobs.map((jobs, index) => (
-                     jobs.accept === 'true' && (              
+                  {inviteJobs.filter(job => job.accept === false).map((jobs, index) => (
+                    //  jobs.accept === 'true' && (              
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
                         <td>{jobs.customerName}</td>
@@ -189,7 +189,7 @@ function Dashcustomerjobs() {
                          
                         </td>
                       </tr>
-                     )
+                     //)
                     ))}
                   </tbody>
                 </table>

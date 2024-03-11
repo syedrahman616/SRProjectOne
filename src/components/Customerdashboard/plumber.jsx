@@ -5,6 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { Button } from "bootstrap";
+import { toast } from "react-toastify";
+
 
 function Plumber(){
     const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
@@ -46,6 +48,7 @@ function Plumber(){
         }
         const response = await axios.get(apiurl,{headers});
         if(response.status===200){
+          console.log(response.data.data);
           setPlumberData(response.data.data); 
         }
       }catch(error){
@@ -61,7 +64,6 @@ function Plumber(){
 
     const  jobInvite =(plumber) =>{
       setShow1(true);
-      console.log(plumber);
       setFormData({
         id: plumber.id,
         plumberId: plumber.plumberId,
@@ -93,14 +95,33 @@ function Plumber(){
         console.log(response.data);
         if (response.status === 200) {
           setShow1(false);
-            setFormData({
-              ...formData,
-              inviteStatus: "success"
-            });
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            backgroundColor:'green'
+          }); 
         } else {
           console.error("Failed"); 
         }
       } catch (error) {
+        setShow1(false);
+        toast.error(error.response.data.error.description, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          backgroundColor:'green'
+        }); 
         console.error("Error:", error);
       }
     };
@@ -142,7 +163,8 @@ function Plumber(){
                     <th scope="col">Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Skill</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -153,6 +175,7 @@ function Plumber(){
                     <td>{plumber.firstName}</td>
                     <td>{plumber.address}</td>
                     <td>{plumber.description}</td>
+                    <td>{plumber.userEmail}</td>
                     <td></td>
                     <td><button className="btn btn-primary" onClick={() => jobInvite(plumber)}>Invite</button></td>
                     </tr>

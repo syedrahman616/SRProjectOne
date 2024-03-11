@@ -3,6 +3,8 @@ import Dashnavbar from "./plumbernavbar";
 import Sidebar from "./plumbersidebar";
 import axios from "axios";
 import Modal from 'react-bootstrap/Modal';
+import { toast } from "react-toastify";
+
 
 
 function AllJobs(){
@@ -63,7 +65,6 @@ function AllJobs(){
 
      const  sendQuotes =(jobs) =>{
       setShow1(true);
-      console.log(jobs);
       setFormData({
         jobId: jobs.id,
      });
@@ -94,15 +95,38 @@ function AllJobs(){
         console.log(response.data);
         if (response.status === 200) {
           setShow1(false);
-            setFormData({
-              ...formData,
-              qutoesStatus: "success"
-            });
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            backgroundColor:'green'
+          }); 
         } else {
           console.error("Failed"); 
         }
       } catch (error) {
         console.error("Error:", error);
+        const message=error.response.data.error.description;
+          if(error.response.status === 422){
+            setShow1(false);
+            toast.error(error.response.data.error.description, {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              backgroundColor:'green'
+            }); 
+
+          }
       }
     };
 
@@ -188,7 +212,7 @@ function AllJobs(){
               </div>
             </div>
           </div>
-          <input type="text" name="jobId" value={formData.jobId}  onChange={handleInputChange} className="form-control"></input>
+          <input type="hidden" name="jobId" value={formData.jobId}  onChange={handleInputChange} className="form-control"></input>
 
           <div className="d-flex justify-content-end mt-3 align-items-center">
             <button className="modalclose me-3">Cancel</button>

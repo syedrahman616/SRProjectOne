@@ -45,14 +45,19 @@ function CustomerSidebar() {
             </div>
           </li>
           {activeDropdown === "customers" && (
+            <>
             <li>
               <Link to="/customer/jobslist"><i className="fa fa-address-card" />Job</Link>
             </li>
-            
-          )}
-          <li>
+            <li>
                <Link to="/customer/finishedjobs"><i className="fa fa-address-card" />Finished Job</Link>
-          </li>
+            </li>
+            </>
+          )}
+         
+            <li>
+               <Link to="/customer/quotes"><i className="fa fa-address-card" />Quotes</Link>
+            </li>
           <li onClick={() => toggleDropdown("plumbers")} className={`dropdown ${activeDropdown === "plumbers" ? "active-link" : ""}`}>
             <div>
               <i className={`fa fa-wrench ${activeDropdown === "plumbers" ? " active-link" : ""}`} />
