@@ -2,6 +2,8 @@ import React, { useState ,useEffect} from "react";
 import Dashnavbar from "./plumbernavbar";
 import Sidebar from "./plumbersidebar";
 import axios from "axios";
+import Modal from 'react-bootstrap/Modal';
+
 
 function Dashcustomerjobs() {
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
@@ -11,35 +13,32 @@ function Dashcustomerjobs() {
   const [offers, setOffers] = useState({});
   const [assignedJobs, setAssignedJobs] = useState({});
 
+  const [show1, setShow1] = useState(false);
+
+  const handleCloses1 = () => {
+    setShow1(false);
+  };
+
   
   const handleSearchChange = (query) => {
     setSearchQuery(query);
   };
 
-  const handlePriceChange = (jobId, price) => {
-    setPrices({ ...prices, [jobId]: price });
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
-  const handleOfferChange = (jobId, offer) => {
-    setOffers({ ...offers, [jobId]: offer });
-  };
-
-  const applyForJob = (jobId) => {
-    console.log("Applied for job:", jobId);
-    // Add logic here to handle applying for the job
-    // Once the job is assigned to the plumber, update the jobs state to reflect the assignment
-    const job = jobs.find(job => job.id === jobId);
-    if (job && !assignedJobs[job.customerName]) {
-      const updatedJobs = jobs.map(j => {
-        if (j.id === jobId) {
-          return { ...j, plumber: "Assigned plumber" };
-        }
-        return j;
-      });
-      setJobs(updatedJobs);
-      setAssignedJobs({ ...assignedJobs, [job.customerName]: true });
-    }
-  };
+  const [formData, setFormData] = useState({
+    price: "",
+    description: "",
+    plumberId:"",
+    flag:""
+  });
 
   //get invitetion jobs
   const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/plumber-job-invitation";
@@ -65,6 +64,78 @@ function Dashcustomerjobs() {
   useEffect(() =>{
     invitejobs();
   },[])
+
+  //send Quotes
+
+  const  applyForJob =(jobs) =>{
+    setShow1(true);
+    console.log(jobs);
+    setFormData({
+      id: jobs.id,
+   });
+  }
+   
+ 
+
+  const finishForJobs = async (jobId) => {
+    var token = localStorage.getItem('accessToken');
+    const apiurl_finish = `https://plumbing.api.heptotechnologies.org/plumber/user/api/finished-plumber?jobId=${jobId}`;
+    
+    try {
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const response = await axios.post(apiurl_finish, null, { headers });
+      if (response.status === 200) {
+        invitejobs();
+        setFormData({
+          ...formData,
+          jobfinishStatus: "success"
+        });
+        console.log(response);
+      } else {
+        console.log('Unexpected response:', response);
+      }
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+  }
+  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const action="invitation";
+    try {  
+         const data = {
+          id: formData.id,
+          startDate:formData.startDate,
+          endDate:formData.endDate,
+          action:action,
+        };
+      
+
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/job-accept";
+      const response = await axios.post(apiurl, data,{headers});
+
+      console.log(response.data);
+      if (response.status === 200) {
+        setShow1(false);
+          setFormData({
+            ...formData,
+            qutoesStatus: "success"
+          });
+      } else {
+        console.error("Failed"); 
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <>
@@ -98,8 +169,7 @@ function Dashcustomerjobs() {
                       <th scope="col">Customer Name</th>
                       <th scope="col">Plumbing Issue</th>
                       <th scope="col">Description</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Offer</th>
+                     
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -111,7 +181,7 @@ function Dashcustomerjobs() {
                         <td>{jobs.customerName}</td>
                         <td>{jobs.jobTitle}</td>
                         <td>{jobs.description}</td>
-                        <td>
+                        {/* <td>
                           <input
                             type="text"
                             value={prices[jobs.id] || ""}
@@ -126,13 +196,12 @@ function Dashcustomerjobs() {
                             onChange={(e) => handleOfferChange(jobs.id, e.target.value)}
                             className="form-control"
                           /> 
-                        </td>
+                        </td> */}
                         <td>
-                          {jobs.plumber ? (
-                            <span>Assigned to: {jobs.plumber}</span>
-                          ) : (
-                            <button onClick={() => applyForJob(jobs.id)} className="btn btn-primary">Apply</button>
-                          )}
+                       
+                            <button onClick={() => applyForJob(jobs)} className="btn btn-primary">Apply</button>
+                            <button onClick={() => finishForJobs(jobs.jobId)} className="btn btn-primary">Finish</button>
+                         
                         </td>
                       </tr>
                     ))}
@@ -143,6 +212,32 @@ function Dashcustomerjobs() {
           </div>
         </div>
       </div>
+
+      <Modal show={show1} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={handleCloses1} centered>
+      <Modal.Body style={{ margin: '0', padding: '0' }}>
+        <div className="modalpad">
+          <h5>Add Rate</h5>
+        
+          <div className="mt-3">
+            <div className="row">
+              <div className="col-6">
+                <label className="mb-2">Start Date:</label>
+                <input type="date" name="startDate" value={formData.startDate} onChange={handleInputChange} className="form-control"></input>
+              </div>
+              <div className="col-6">
+                <label className="mb-2">End Date:</label>
+                <input type="date" name="endDate" value={formData.endDate}  onChange={handleInputChange} className="form-control"></input>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="id" value={formData.jobId}  onChange={handleInputChange} className="form-control"></input>
+          <div className="d-flex justify-content-end mt-3 align-items-center">
+            <button className="modalclose me-3">Cancel</button>
+            <button className="modalsave" onClick={handleSubmit}>Save</button>
+          </div>
+        </div>
+      </Modal.Body>
+       </Modal>
     </>
   );
 }

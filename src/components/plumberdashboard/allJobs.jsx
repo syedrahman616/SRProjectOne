@@ -2,15 +2,38 @@ import React,{useEffect, useState } from "react";
 import Dashnavbar from "./plumbernavbar";
 import Sidebar from "./plumbersidebar";
 import axios from "axios";
+import Modal from 'react-bootstrap/Modal';
+
 
 function AllJobs(){
     const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
+    const [show1, setShow1] = useState(false);
 
+    const handleCloses1 = () => {
+      setShow1(false);
+    };
+  
     const handleSearchChange = (query) => {
         setSearchQuery(query);
     };
     
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    };
+
+    const [formData, setFormData] = useState({
+      price: "",
+      description: "",
+      plumberId:"",
+      flag:""
+    });
+
     const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/all-jobs";
     const [plumberjobsData, setJobs] = useState([]); 
   
@@ -35,6 +58,53 @@ function AllJobs(){
     useEffect(() =>{
       alljobs();
     },[])
+
+     //send Quotes
+
+     const  sendQuotes =(jobs) =>{
+      setShow1(true);
+      console.log(jobs);
+      setFormData({
+        jobId: jobs.id,
+     });
+    }
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const flag="add";
+      try {  
+           const data = {
+            jobId: formData.jobId,
+            price: formData.price,
+            description:formData.description,
+            flag: flag,
+            startDate:formData.startDate,
+            endDate:formData.endDate,
+
+          };
+        
+  
+        const headers = {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+        const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/plumber-quotes";
+        const response = await axios.post(apiurl, data,{headers});
+  
+        console.log(response.data);
+        if (response.status === 200) {
+          setShow1(false);
+            setFormData({
+              ...formData,
+              qutoesStatus: "success"
+            });
+        } else {
+          console.error("Failed"); 
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
 
     return(
         <>
@@ -75,9 +145,9 @@ function AllJobs(){
                       <tr>
                       <th scope="row">{index + 1 }</th>
                       <td>{jobs.customerName}</td>
-                      <td></td>
+                      <td>{jobs.jobTitle}</td>
                       <td>{jobs.description}</td>
-                      <td><button  className="btn btn-success">Send Notify</button></td>
+                      <td><button onClick={() => sendQuotes(jobs)} className="btn btn-success">Send Notify</button></td>
                     </tr>
   
                     ))}
@@ -88,6 +158,45 @@ function AllJobs(){
             </div>
           </div>
         </div>
+
+        <Modal show={show1} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={handleCloses1} centered>
+      <Modal.Body style={{ margin: '0', padding: '0' }}>
+        <div className="modalpad">
+          <h5>Add Rate</h5>
+        
+          <div className="mt-3">
+            <div className="row">
+              <div className="col-6">
+                <label className="mb-2">Price:</label>
+                <input type="text" name="price" value={formData.price} onChange={handleInputChange} className="form-control"></input>
+              </div>
+              <div className="col-6">
+                <label className="mb-2">Description:</label>
+                <input type="text" name="description" value={formData.description}  onChange={handleInputChange} className="form-control"></input>
+              </div>
+            </div>
+          </div>
+          <div className="mt-3">
+            <div className="row">
+              <div className="col-6">
+                <label className="mb-2">Start Date:</label>
+                <input type="date" name="startDate" value={formData.startDate} onChange={handleInputChange} className="form-control"></input>
+              </div>
+              <div className="col-6">
+                <label className="mb-2">End Date:</label>
+                <input type="date" name="endDate" value={formData.endDate}  onChange={handleInputChange} className="form-control"></input>
+              </div>
+            </div>
+          </div>
+          <input type="text" name="jobId" value={formData.jobId}  onChange={handleInputChange} className="form-control"></input>
+
+          <div className="d-flex justify-content-end mt-3 align-items-center">
+            <button className="modalclose me-3">Cancel</button>
+            <button className="modalsave" onClick={handleSubmit}>Save</button>
+          </div>
+        </div>
+      </Modal.Body>
+       </Modal>
       </>
     )
 }

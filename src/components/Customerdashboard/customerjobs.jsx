@@ -99,6 +99,7 @@ function Customerjobs(){
       // const vedio='testing';
       console.log(image,image1,vedio);
       const flag=formData.flag;
+      console.log(flag);
       let data;
       if(flag == 'add')
       {
@@ -113,7 +114,7 @@ function Customerjobs(){
           flag: flag,
         };
       }
-      else
+      else if(flag == 'edit')
       {
          data = {
                     address: formData.address,
@@ -127,6 +128,20 @@ function Customerjobs(){
                     vedio: vedio,
                     flag: flag,
          };
+      }
+      else{
+        
+        data = {
+          address: formData.address,
+          jobTitle: formData.jobTitle,
+          postCode: formData.postcode,
+          description:formData.description,
+          image1: image,
+          image2: image1,
+          vedio: vedio,
+          flag: 'add',
+        };
+
       }
 
       const headers = {

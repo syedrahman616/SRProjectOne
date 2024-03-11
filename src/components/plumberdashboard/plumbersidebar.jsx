@@ -73,7 +73,7 @@ function PlumberSidebar() {
               </Link>
             </li>
             <li>
-              <Link to="/plumberdetails" >
+              <Link to="/plumber/finishedjobs" >
                 <i className="fa fa-address-card-o" /> Finished Jobs
               </Link>
             </li>
@@ -81,6 +81,12 @@ function PlumberSidebar() {
           )}
 
         
+          <li className={location.pathname === "/plumber/qutoes" ? "active-link" : ""}>
+            <Link to="/check" className={location.pathname === "/plumber/qutoes" ? "active-link" : ""}>
+              <i className={`fa fa-user-o${location.pathname === "/plumber/qutoes" ? " active-link" : ""}`} />
+               Plumber Qutoes
+            </Link>
+          </li>
           <li className={location.pathname === "/loginpage" ? "active-link" : ""} onClick={logOut}>
               <i className={`fa fa-sign-out${location.pathname === "/loginpage" ? " active-link" : ""}`} />
               Log Out
