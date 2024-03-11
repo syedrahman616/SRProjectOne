@@ -181,7 +181,7 @@ function Plumber(){
               </div>
             </div>
           </div>
-          <input type="text" name="plumberId" value={formData.plumberId}  onChange={handleInputChange} className="form-control"></input>
+          <input type="hidden" name="plumberId" value={formData.plumberId}  onChange={handleInputChange} className="form-control"></input>
 
           <div className="d-flex justify-content-end mt-3 align-items-center">
             <button className="modalclose me-3">Cancel</button>

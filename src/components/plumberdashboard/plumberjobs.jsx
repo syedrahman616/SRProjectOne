@@ -175,28 +175,13 @@ function Dashcustomerjobs() {
                   </thead>
                   <tbody>
                   {inviteJobs.map((jobs, index) => (
-
+                     jobs.accept === 'true' && (              
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
                         <td>{jobs.customerName}</td>
                         <td>{jobs.jobTitle}</td>
                         <td>{jobs.description}</td>
-                        {/* <td>
-                          <input
-                            type="text"
-                            value={prices[jobs.id] || ""}
-                            onChange={(e) => handlePriceChange(jobs.id, e.target.value)}
-                            className="form-control"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="text"
-                            value={offers[jobs.id] || ""}
-                            onChange={(e) => handleOfferChange(jobs.id, e.target.value)}
-                            className="form-control"
-                          /> 
-                        </td> */}
+                       
                         <td>
                        
                             <button onClick={() => applyForJob(jobs)} className="btn btn-primary">Apply</button>
@@ -204,6 +189,7 @@ function Dashcustomerjobs() {
                          
                         </td>
                       </tr>
+                     )
                     ))}
                   </tbody>
                 </table>

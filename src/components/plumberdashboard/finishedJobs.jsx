@@ -79,9 +79,16 @@ function Finishedjobs()
                             <th scope="row">{index + 1}</th>
                             <td>{data.customerName}</td>
                             <td>{data.jobTitle}</td>
-                            <td>{data.price}</td>
+                            <td>{data.fixedPrice}</td>
                             <td>{data.description}</td>
-                            <td><button className="btn btn-success">Send Notify</button></td>
+                            <td>
+                              {data.finished === 'false' ? (
+                                <button className="btn btn-primary">On Progress</button>
+                              ) : (
+                                <button className="btn btn-success">Finished</button>
+                              )}
+                          </td>
+
                         </tr>
                       ))}
                     </tbody>

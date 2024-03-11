@@ -91,12 +91,12 @@ function Customerjobs(){
       [name]: value
     });
   };
+  console.log('image',image,image1,vedio);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const image1='test';
-      // const image2='test';
-      // const vedio='testing';
+      
       console.log(image,image1,vedio);
       const flag=formData.flag;
       console.log(flag);
@@ -183,6 +183,7 @@ function Customerjobs(){
 
   //file Upload
   const uploadFile = async (fieldName) => {
+    alert(fieldName);
     try {
       const fileInput = document.querySelector('input[type="file"]');
       const fileName = fileInput.getAttribute('name');
@@ -194,7 +195,7 @@ function Customerjobs(){
         console.error("No file selected.");
         return;
       }
-  
+     
       const formData = new FormData();
       formData.append('file', file);
   
@@ -219,8 +220,9 @@ function Customerjobs(){
             setImage1(image);
           }
 
-          if(fieldName == 'vedio')
+          if(fieldName == 'video')
           {
+            alert(image);
             setVedio(image);
 
           }
@@ -417,13 +419,11 @@ function Customerjobs(){
             <label className="mb-2">Image File:</label>
             <input type="file" name="image1" className="form-control" accept="image/png, image/jpeg"></input>
             <button onClick={() => uploadFile('image1')} className="btn btn-primary">Upload</button>
-
           </div>
           <div className="mt-3">
             <label className="mb-2">Image File2:</label>
             <input type="file" className="form-control" name="image2" accept="image/png, image/jpeg"></input>
             <button onClick={() => uploadFile('image2')} className="btn btn-primary">Upload</button>
-
           </div>
           <div className="mt-3">
             <label className="mb-2">Vedio File:</label>
