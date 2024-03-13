@@ -95,17 +95,17 @@ function Customerplumber(){
                 {/* <button className="dashaddbutton" onClick={addnew_plumber}>Add new</button> */}
               </div> 
             </div>
+            <p>Plumber Details:</p>
             <div className="table-responsive">
               <table className="table table-bordered mt-3">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
                     <th scope="col">Plumbers Name</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Plumber Skill</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Start Date</th>
+                    <th scope="col">Address</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -113,11 +113,16 @@ function Customerplumber(){
                   <tr>
                     <th scope="row">{index + 1 }</th>
                     <td>{plumber.firstName}</td>
+                    <td>{plumber.userEmail}</td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                     <td><button  className="btn btn-primary">Work On Progress</button></td>
-                    <td><button  className="btn btn-success">Send Notify</button></td>
+                    <td>{plumber.address}</td>
+                    <td>
+                     {plumber.availability === 'false' ? (
+                        <button className="btn btn-primary">Active</button>
+                      ) : (
+                        <button className="btn btn-success">Work On Progress</button>
+                      )}
+                    </td>
                   </tr>
                 ))}
                 </tbody>

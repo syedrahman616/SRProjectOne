@@ -4,6 +4,7 @@ import Sidebar from "./customersidebar";
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 function Customerjobs(){
@@ -13,6 +14,7 @@ function Customerjobs(){
   const [image, setImage] = useState("");
   const [image1, setImage1] = useState("");
   const [vedio, setVedio] = useState("");
+  const [errors, setErrors] = useState({});
 
 
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
@@ -36,6 +38,16 @@ function Customerjobs(){
   const addnew_plumber = () => {
     setShow1(true);
   };
+
+  const handleCancel =  () => {
+    setShow1(false); 
+  }
+
+  const viewClose = () =>{
+    setviewshow(false);
+  }
+
+ 
 
   const handleStatusFilterChange = (status) => {
     setStatusFilter(status);
@@ -82,6 +94,31 @@ function Customerjobs(){
     flag:""
   });
 
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {};
+
+   
+    if (!formData.jobTitle.trim()) {
+      newErrors.jobTitle = "Job title is required";
+      valid = false;
+    }
+    if (!formData.address.trim()) {
+      newErrors.address = "Address is required";
+      valid = false;
+    }
+    if (!formData.postCode.trim()) {
+      newErrors.postCode = "Postcode is required";
+      valid = false;
+    }
+    if (!formData.description.trim()) {
+      newErrors.description = "Description is required";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
 
    const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -95,8 +132,10 @@ function Customerjobs(){
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     try {
-      
       console.log(image,image1,vedio);
       const flag=formData.flag;
       console.log(flag);
@@ -116,6 +155,7 @@ function Customerjobs(){
       }
       else if(flag == 'edit')
       {
+        alert('edit');
          data = {
                     address: formData.address,
                     jobTitle: formData.jobTitle,
@@ -123,8 +163,8 @@ function Customerjobs(){
                     description:formData.description,
                     customerId:formData.customerId,
                     id:formData.id,
-                    image1: image1,
-                    image2: image2,
+                    image1: image,
+                    image2: image1,
                     vedio: vedio,
                     flag: flag,
          };
@@ -151,24 +191,38 @@ function Customerjobs(){
       const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/add-job";
       const response = await axios.post(apiurl, data,{headers});
 
-      console.log(response.data);
       if (response.status === 200) {
-        setShow1(false);
-        customerjobs();
         if(response.data.message=='Edited Successfully')
         {
-          setFormData({
-            ...formData,
-            jobEditStatus: "success"
-          });
-
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            backgroundColor:'green'
+          }); 
+          seteditshow(false);
+          customerjobs();
         }
         else
         {
-          setFormData({
-            ...formData,
-            jobStatus: "success"
-          });
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            backgroundColor:'green'
+          }); 
+          setShow1(false);
+          customerjobs();
         }
       } else {
         console.error("Failed");
@@ -183,16 +237,25 @@ function Customerjobs(){
 
   //file Upload
   const uploadFile = async (fieldName) => {
-    alert(fieldName);
     try {
       const fileInput = document.querySelector('input[type="file"]');
       const fileName = fileInput.getAttribute('name');
-      
-      console.log(fileName);
       const file = fileInput.files[0];
   
       if (!file) {
-        console.error("No file selected.");
+        const errorfile="File is required";
+        toast.error(errorfile, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          backgroundColor:'green'
+        }); 
+
         return;
       }
      
@@ -213,18 +276,40 @@ function Customerjobs(){
           if(fieldName == 'image1')
           {
             setImage(image);
+            if(image != '')
+            {
+              alert('File Upload Successfully');
+            }
+            else
+            {
+              alert('File Not Upload');
+            }
           }
 
           if(fieldName == 'image2')
           {
             setImage1(image);
+            if(image1 != '')
+            {
+              alert('File Upload Successfully');
+            }
+            else
+            {
+              alert('File Not Upload');
+            }
           }
 
           if(fieldName == 'video')
           {
-            alert(image);
             setVedio(image);
-
+            if(vedio != '')
+            {
+              alert('File Upload Successfully');
+            }
+            else
+            {
+              alert('File Not Upload');
+            }
           }
           
       } else {
@@ -255,11 +340,19 @@ function Customerjobs(){
       const response = await axios.post(apiurl_delete,data,{headers});
       if(response.status===200){
         customerjobs();
-        setFormData({
-          ...formData,
-          jobDeleteStatus: "success"
-        });
         console.log(response);
+
+        toast.success(response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          backgroundColor:'green'
+        }); 
       }
     }catch(error){
         console.log(error);
@@ -286,6 +379,7 @@ function Customerjobs(){
 
   const viewJob =(jobs) =>{
     setviewshow(true);
+    console.log(jobs);
     setFormData({
       jobTitle: jobs.jobTitle,
       address: jobs.address,
@@ -312,21 +406,7 @@ function Customerjobs(){
           <Sidebar activelink={isPlumbersLinkActive} />
         </div>
         <div className="col-9 col_corr_1">
-        {formData.jobStatus === "success" && (
-              <div className="alert alert-success" role="alert">
-                Jobs added successfully!
-              </div>
-            )}
-            {formData.jobEditStatus === "success" && (
-              <div className="alert alert-success" role="alert">
-                Updated successfully!
-              </div>
-            )}
-             {formData.jobDeleteStatus === "success" && (
-              <div className="alert alert-success" role="alert">
-                Jobs Deleted successfully!
-              </div>
-            )}
+       
           <div className="dashmain">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div className="d-flex align-items-center">                
@@ -338,7 +418,7 @@ function Customerjobs(){
                 <button className="dashaddbutton" onClick={addnew_plumber}>Add new</button>
               </div> 
             </div>
-
+             <p>Job List:</p>
             <div className="table-responsive">
               <table className="table table-bordered mt-3">
                 <thead>
@@ -395,10 +475,12 @@ function Customerjobs(){
             <div className="col-6">
               <label className="mb-2">Plumbing Issue:</label>
               <input type="text" name="jobTitle" value={formData.jobTitle} onChange={handleInputChange} className="form-control"></input>
+              {errors.jobTitle && <div className="text-danger">{errors.jobTitle}</div>}
             </div>
             <div className="col-6">
               <label className="mb-2">Address:</label>
               <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
+              {errors.address && <div className="text-danger">{errors.address}</div>}
             </div>
             </div>
           </div>
@@ -408,10 +490,12 @@ function Customerjobs(){
               <div className="col-6">
                 <label className="mb-2">PostCode:</label>
                 <input type="text" name="postCode" value={formData.postCode}  onChange={handleInputChange} className="form-control"></input>
+                {errors.postCode && <div className="text-danger">{errors.postCode}</div>}
               </div>
               <div className="col-6">
               <label className="mb-2">Description:</label>
                    <input type="text" name="description" value={formData.description}  onChange={handleInputChange} className="form-control"></input>
+              {errors.description && <div className="text-danger">{errors.description}</div>}
               </div>
             </div>
           </div>
@@ -427,12 +511,12 @@ function Customerjobs(){
           </div>
           <div className="mt-3">
             <label className="mb-2">Vedio File:</label>
-            <input type="file" className="form-control" name="vedio" accept="image/png, image/jpeg"></input>
+            <input type="file" className="form-control" name="vedio"  accept="video/mp4, video/mpeg, video/ogg, video/webm"></input>
             <button onClick={() => uploadFile('video')} className="btn btn-primary">Upload</button>
           </div>
 
           <div className="d-flex justify-content-end mt-3 align-items-center">
-            <button className="modalclose me-3">Cancel</button>
+            <button className="modalclose me-3" onClick={handleCancel}>Cancel</button>
             <button className="modalsave" onClick={handleSubmit}>Save</button>
           </div>
         </div>
@@ -446,31 +530,43 @@ function Customerjobs(){
           <div className="mt-3">
             <label className="mb-2">Plumbing Issue:</label>
             <input type="text" value={formData.jobTitle} onChange={handleInputChange}  name="jobTitle" className="form-control"></input>
+            {errors.jobTitle && <div className="text-danger">{errors.jobTitle}</div>}
           </div>
           <div className="mt-3">
             <label className="mb-2">Address:</label>
             <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
+            {errors.address && <div className="text-danger">{errors.address}</div>}
           </div>
           <div className="mt-3">
             <label className="mb-2">PostCode:</label>
             <input type="text" name="postCode" value={formData.postCode}  onChange={handleInputChange} className="form-control"></input>
+            {errors.postCode && <div className="text-danger">{errors.postCode}</div>}
           </div>
           <div className="mt-3">
             <label className="mb-2">Description:</label>
             <input type="text" name="description"  value={formData.description}  onChange={handleInputChange}  className="form-control"></input>
+            {errors.description && <div className="text-danger">{errors.description}</div>}
           </div>
+
           <div className="mt-3">
             <label className="mb-2">Image File:</label>
-            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+            <input type="file" className="form-control" name="image"accept="image/png, image/jpeg"></input>
+            <button onClick={() => uploadFile('image1')} className="btn btn-primary">Upload</button>
+          </div>
+          <div className="mt-3">
+            <label className="mb-2">Image File2:</label>
+            <input type="file" className="form-control" name="image2"  accept="image/png, image/jpeg"></input>
+            <button onClick={() => uploadFile('image2')} className="btn btn-primary">Upload</button>
           </div>
           <div className="mt-3">
             <label className="mb-2">Vedio File:</label>
-            <input type="file" className="form-control" accept="image/png, image/jpeg"></input>
+            <input type="file" className="form-control" name="vedio"  accept="video/mp4, video/mpeg, video/ogg, video/webm"></input>
+            <button onClick={() => uploadFile('video')} className="btn btn-primary">Upload</button>
           </div>
           <input type="hidden" className="form-control" name="id" value={formData.id}></input>
 
           <div className="d-flex justify-content-end mt-3 align-items-center">
-            <button className="modalclose me-3">Cancel</button>
+            <button className="modalclose me-3" onClick={handleCloses2}>Cancel</button>
             <button className="modalsave" onClick={handleSubmit}>Save</button>
           </div>
         </div>
@@ -484,18 +580,22 @@ function Customerjobs(){
           <div className="mt-3">
             <label className="mb-2">Plumbing Issue:</label>
             <input type="text"  name="jobTitle" value={formData.jobTitle} onChange={handleInputChange} className="form-control"></input>
+            {errors.jobTitle && <div className="text-danger">{errors.jobTitle}</div>}
           </div>
           <div className="mt-3">
             <label className="mb-2">Address:</label>
             <input type="text" name="address" value={formData.address}  onChange={handleInputChange} className="form-control"></input>
+            {errors.address && <div className="text-danger">{errors.address}</div>}
           </div>
           <div className="mt-3">
             <label className="mb-2">PostCode:</label>
             <input type="text" name="postCode" value={formData.postCode}  onChange={handleInputChange} className="form-control"></input>
+            {errors.postCode && <div className="text-danger">{errors.postCode}</div>}
           </div>
           <div className="mt-3">
             <label className="mb-2">Description:</label>
             <input type="text" name="description"  value={formData.description}  onChange={handleInputChange}  className="form-control"></input>
+            {errors.description && <div className="text-danger">{errors.description}</div>}
           </div>
           <div className="mt-3">
             <label className="mb-2">Image File:</label>
@@ -512,8 +612,8 @@ function Customerjobs(){
           <input type="hidden" className="form-control" name="id" value={formData.id}></input>
 
           <div className="d-flex justify-content-end mt-3 align-items-center">
-            {/* <button className="modalclose me-3">Cancel</button>
-            <button className="modalsave" onClick={handleSubmit}>Save</button> */}
+            <button className="modalclose" onClick={viewClose}>Cancel</button>
+            {/* <button className="modalsave" onClick={handleSubmit}>Save</button> */}
           </div>
         </div>
       </Modal.Body>

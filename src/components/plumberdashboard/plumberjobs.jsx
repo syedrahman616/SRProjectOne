@@ -161,6 +161,7 @@ function Dashcustomerjobs() {
                 </div>
               </div>
               <div className="table-responsive">
+                <p>Invite Jobs</p>
                 <table className="table table-bordered mt-3">
                   <thead>
                     
@@ -169,13 +170,11 @@ function Dashcustomerjobs() {
                       <th scope="col">Customer Name</th>
                       <th scope="col">Plumbing Issue</th>
                       <th scope="col">Description</th>
-                     
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                   {inviteJobs.filter(job => job.accept === false).map((jobs, index) => (
-                    //  jobs.accept === 'true' && (              
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
                         <td>{jobs.customerName}</td>

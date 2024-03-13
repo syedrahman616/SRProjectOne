@@ -93,4 +93,4 @@ function Quotes()
         </>
     )
 }
-export default Quotes
+export default Quotes 

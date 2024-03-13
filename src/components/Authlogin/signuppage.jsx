@@ -3,7 +3,11 @@ import "./admin.css";
 import Img5 from "../../assets/women/plumbing_19 [Converted]-01.png";
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Eye from '../../assets/women/eye.png';
+import Eyeslash from '../../assets/women/eye-slash.png';
+
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -18,6 +22,10 @@ function Signup() {
     registrationStatus: "" // New state for registration status
   });
 
+  const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "mobile" && !/^\+?\d{0,10}$/.test(value)) {
@@ -29,8 +37,50 @@ function Signup() {
     });
   };
 
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {};
+
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "First Name is required";
+      valid = false;
+    }
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Last Name is required";
+      valid = false;
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+      valid = false;
+    }
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required";
+      valid = false;
+    }
+    if (!formData.mobile.trim()) {
+      newErrors.mobile = "Mobile is required";
+      valid = false;
+    }
+    if (!formData.address.trim()) {
+      newErrors.lastName = "Last Name is required";
+      valid = false;
+    }
+
+    if (!formData.role.trim()) {
+      newErrors.role = "Role is required";
+      valid = false;
+    }
+
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     try {
       const data = {
         firstName: formData.firstName,
@@ -44,10 +94,22 @@ function Signup() {
       };
       const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/auth/signup";
       const response = await axios.post(apiurl, data);
-
-      console.log(response);
       if (response.status === 200) {
-        console.log("User registered successfully");
+        const responseData = response.data;
+
+        const userRole1 = responseData.data.userRole;
+        localStorage.setItem('accessToken',responseData.data.accessToken);
+        localStorage.setItem('userRole',userRole1);
+        console.log(userRole1);
+        if (userRole1 === "Admin") {
+          navigate("/dashboard"); 
+        } else if (userRole1 === "Plumber") {
+          navigate("/plumberdashboard"); 
+        } else if (userRole1 === "Customer") {
+          navigate("/customerdashboard"); 
+        } else {
+          console.error("Unknown user role:", userRole1 );
+        }
         toast.error(error.response.data.mobile_error, {
           position: "top-right",
           autoClose: 2000,
@@ -58,10 +120,7 @@ function Signup() {
           progress: undefined,
           theme: "colored",
         });
-        setFormData({
-          ...formData,
-          registrationStatus: "success"
-        });
+      
       } else {
         console.error("Registration failed");
       }
@@ -69,6 +128,10 @@ function Signup() {
       console.error("Error registering user:", error);
     }
   };
+  const [showPasswords, setShowPasswords] = useState(false);
+  const togglePasswordVisibilitys = () => {
+    setShowPasswords(!showPasswords);
+};
   return (
     <>
       <div className="sign100 signpad">
@@ -115,12 +178,12 @@ function Signup() {
                     onChange={handleInputChange}
                     placeholder="Enter Name"
                   />
+                  {errors.firstName && <div className="text-danger">{errors.firstName}</div>}
                 </div>
               </div>
               <div className="mt-2">
                 <div className="input-group">
-                  <span
-                    className="input-icon d-flex jusify-content-center align-items-center"
+                  <span  className="input-icon d-flex jusify-content-center align-items-center"
                     style={{ marginRight: "10px" }}
                   >
                     <i className="fa fa-user "></i>
@@ -133,6 +196,7 @@ function Signup() {
                     onChange={handleInputChange}
                     placeholder="Enter Last Name"
                   />
+                {errors.lastName && <div className="text-danger">{errors.lastName}</div>}
                 </div>
               </div>
               <div className="mt-2">
@@ -151,6 +215,7 @@ function Signup() {
                     onChange={handleInputChange}
                     placeholder="Enter Email"
                   />
+                {errors.email && <div className="text-danger">{errors.email}</div>}
                 </div>
               </div>
               <div className="mt-2">
@@ -161,14 +226,26 @@ function Signup() {
                   >
                     <i className="fa fa-lock "></i>
                   </span>
-                  <input
+                  {/* <input
                     type="text"
                     className="form-control logininput"
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
                     placeholder="Enter Password"
-                  />
+                  /> */}
+                    <div style={{ position: "relative", width: "95%" }}>
+                                        <input type={showPasswords ? 'text' : 'password'} className="form-control logininput" id="userpassword"
+                                            placeholder="Password" name="password" value={formData.password} onChange={handleInputChange} />
+                                        <p className="toggle-passwords" onClick={togglePasswordVisibilitys} style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
+                                            {showPasswords ? (
+                                                <img src={Eye} className='eye' style={{ width: '20px', height: 'auto' }} alt="Hide Password" />
+                                            ) : (
+                                                <img src={Eyeslash} className='eye' style={{ width: '20px', height: 'auto' }} alt="Show Password" />
+                                            )}
+                                        </p>
+                                    </div>
+                 {errors.password && <div className="text-danger">{errors.password}</div>}
                 </div>
               </div>
               <div className="mt-2">
@@ -187,6 +264,7 @@ function Signup() {
                     onChange={handleInputChange}
                     placeholder="Enter Mobile Number"
                   />
+                  {errors.mobile && <div className="text-danger">{errors.mobile}</div>}
                 </div>
               </div>
               <div className="mt-2">
@@ -205,6 +283,7 @@ function Signup() {
                     onChange={handleInputChange}
                     placeholder="Enter Post-code"
                   />
+                 {errors.postcode && <div className="text-danger">{errors.mobile}</div>}
                 </div>
               </div>
               <div className="mt-2">
@@ -223,7 +302,10 @@ function Signup() {
                     onChange={handleInputChange}
                     placeholder="Enter Address"
                   />
+                 {errors.address && <div className="text-danger">{errors.address}</div>}
+
                 </div>
+
               </div>
               <div className="mt-2">
                 <div className="input-group">
@@ -231,7 +313,7 @@ function Signup() {
                     <i className="fa fa-user me-3"></i>
                   </span>
                   <select
-                    className="form-control logininput "
+                    className="form-control form-select logininput "
                     style={{ marginLeft: "-7px" }}
                     name="role"
                     value={formData.role}
@@ -246,6 +328,8 @@ function Signup() {
                     </option>
                     
                   </select>
+                  {errors.role && <div className="text-danger">{errors.role}</div>}
+
                 </div>
               </div>
               <div className="mt-2">

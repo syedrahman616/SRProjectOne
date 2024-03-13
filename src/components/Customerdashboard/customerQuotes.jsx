@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Dashnavbar from "./customernavbar";
 import Sidebar from "./customersidebar";
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function customerQuotes()
+function CustomerQuotes()
 {
     const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
    
@@ -15,7 +15,7 @@ function customerQuotes()
 
     var token = localStorage.getItem('accessToken');
 
-    const customerQuotes= async() => {
+    const customerQuotesJobs= async() => {
       try{
         const headers = {
           'Authorization': `Bearer ${token}`,
@@ -32,7 +32,7 @@ function customerQuotes()
     }
 
     useEffect(() =>{
-        customerQuotes();
+      customerQuotesJobs();
     },[])
 
 
@@ -54,7 +54,7 @@ function customerQuotes()
             </div>
             <div className="d-flex justify-content-between align-items-center mb-3">
               <div>
-                <p>Plumber Finished Job</p>
+                <p>Customer Qutoes</p>
               </div> 
             </div>
 
@@ -63,28 +63,20 @@ function customerQuotes()
                 <thead>
                   <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Name</th>
+                    <th scope="col">Plumber Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Description</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                 {quotesjobsData.map((data, index) => (
                     <tr>
                     <th scope="row">{index + 1 }</th>
-                    <td>{data.customerName}</td>
+                    <td>{data.plumberName}</td>
                     <td>{data.address}</td>
                     <td>{data.description}</td>
-                    <td>{data.fixedPrice}</td>
-                    <td>
-                      {data.finished === 'false' ? (
-                        <button className="btn btn-primary" onClick={() => finishForJobs(data.id)}>Verify</button>
-                      ) : (
-                        <button className="btn btn-success">Finished</button>
-                      )}
-                    </td>
+                    <td>{data.price}</td>
 
                     </tr>
                 ))}
@@ -99,4 +91,4 @@ function customerQuotes()
   </>
     ) 
 }
-export default customerQuotes;
+export default CustomerQuotes;

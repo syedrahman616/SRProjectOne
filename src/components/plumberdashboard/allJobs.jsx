@@ -40,7 +40,7 @@ function AllJobs(){
     const [plumberjobsData, setJobs] = useState([]); 
   
     var token = localStorage.getItem('accessToken');
-  
+    
     const alljobs= async() => {
       try{
         const headers = {
@@ -154,6 +154,7 @@ function AllJobs(){
                   </div>
                 </div>
                 <div className="table-responsive">
+                  <p>All Jobs</p>
                   <table className="table table-bordered mt-3">
                     <thead>
                       <tr>

@@ -3,6 +3,7 @@ import Dashnavbar from "./dashnavbar";
 import Sidebar from "./dashsidebar";
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Dashcustomer(){
   const [show1, setShow1] = useState(false);
@@ -118,11 +119,18 @@ function Dashcustomer(){
         console.log(response);
         if (response.status === 200) {
           setShow1(false);
-          console.log("User registered successfully");
-          setFormData({
-            ...formData,
-            registrationStatus: "success"
-          });
+          toast.success(response.data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            backgroundColor:'green'
+          }); 
+          customerget();
         } else {
           console.error("Registration failed");
         }

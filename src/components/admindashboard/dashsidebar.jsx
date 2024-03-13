@@ -109,13 +109,8 @@ function Sidebar() {
               </li>
             </>
           )}
-           <li
-            className={
-              location.pathname === "/admin/plumberjobs" ? "active-link" : ""
-            }
-          >
-            <Link
-              to="/admin/plumberjobs"
+           <li className={ location.pathname === "/admin/plumberjobs" ? "active-link" : "" } >
+            <Link to="/admin/plumberjobs"
               className={
                 location.pathname === "/admin/plumberjobs" ? "active-link" : ""
               }
@@ -126,6 +121,20 @@ function Sidebar() {
                 }`}
               />
               Finished Jobs
+            </Link>
+          </li>
+          <li className={ location.pathname === "/admin/quotes" ? "active-link" : "" } >
+            <Link to="/admin/quotes"
+              className={
+                location.pathname === "/admin/quotes" ? "active-link" : ""
+              }
+            >
+              <i
+                className={`fa fa-briefcase${
+                  location.pathname === "/admin/quotes" ? " active-link" : ""
+                }`}
+              />
+              Qutoes
             </Link>
           </li>
           <li className={location.pathname === "/review" ? "active-link" : ""}>

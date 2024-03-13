@@ -3,6 +3,7 @@ import Dashnavbar from "./dashnavbar";
 import Sidebar from "./dashsidebar";
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Dashplumber() {
   const [show1, setShow1] = useState(false);
@@ -117,10 +118,18 @@ function Dashplumber() {
       if (response.status === 200) {
         setShow1(false);
         console.log("User registered successfully");
-        setFormData({
-          ...formData,
-          registrationStatus: "success"
-        });
+        toast.success(response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          backgroundColor:'green'
+        }); 
+        plumberget();  
       } else {
         console.error("Registration failed");
       }
@@ -151,10 +160,17 @@ function Dashplumber() {
       const response = await axios.post(apiurl, data,{headers});
       if (response.status === 200) {
         setShow2(false);
-        setFormData({
-          ...formData,
-          adminApprove: "success"
-        });
+        toast.success(response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          backgroundColor:'green'
+        }); 
       } else {
         console.error("Approved Failed");
       }
@@ -198,10 +214,17 @@ function Dashplumber() {
       if(response.status===200){
         console.log(response);
         plumberget();
-        setFormData({
-          ...formData,
-          DeleteStatus: "success"
-        });
+        toast.success(response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          backgroundColor:'green'
+        }); 
       }
     }catch(error){
         console.log(error);
@@ -370,7 +393,7 @@ function Dashplumber() {
           <div className="modalpad">
             <p>Are you sure you want to update?</p>
             <div className="d-flex justify-content-end mt-3 align-items-center">
-              <button className="modalclose me-3" >Cancel</button>
+              <button className="modalclose me-3" onClick={handleCloses2} >Cancel</button>
               <button  className="modalsave" onClick={approveSubmit}>Save</button>
             </div>
           </div>

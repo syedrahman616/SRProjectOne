@@ -62,6 +62,7 @@ function Finishedjobs()
                   </div>
                 </div>
                 <div className="table-responsive">
+                  <p>Finished Jobs</p>
                   <table className="table table-bordered mt-3">
                     <thead>
                       <tr>
