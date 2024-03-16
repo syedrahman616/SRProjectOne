@@ -9,14 +9,14 @@ function Customerplumber(){
   const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
   const [statusFilter, setStatusFilter] = useState("All"); // Default filter
   const [searchQuery, setSearchQuery] = useState("");
-
+ 
   const handleCloses1 = () => {
     setShow1(false);
   };
 
   const addnew_plumber = () => {
     setShow1(true);
-  };
+  }; 
 
   const handleStatusFilterChange = (status) => {
     setStatusFilter(status);
@@ -114,14 +114,14 @@ function Customerplumber(){
                     <th scope="row">{index + 1 }</th>
                     <td>{plumber.firstName}</td>
                     <td>{plumber.userEmail}</td>
-                    <td></td>
+                    <td>{plumber.skill}</td>
                     <td>{plumber.address}</td>
                     <td>
                      {plumber.availability === 'false' ? (
                         <button className="btn btn-primary">Active</button>
-                      ) : (
+                       ) : (
                         <button className="btn btn-success">Work On Progress</button>
-                      )}
+                      )} 
                     </td>
                   </tr>
                 ))}

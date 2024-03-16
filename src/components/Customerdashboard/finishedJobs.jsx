@@ -3,6 +3,7 @@ import Dashnavbar from "./customernavbar";
 import Sidebar from "./customersidebar";
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 
@@ -10,9 +11,9 @@ function CustomerFinishedJobs()
 {
     const [isPlumbersLinkActive, setIsPlumbersLinkActive] = useState(true);
     const [show1, setShow1] = useState(false);
+    const [errors, setErrors] = useState({});
    
-
-    const handleCloses1 = () => {
+    const handleCloses1= () => {
       setShow1(false);
     };
   
@@ -26,10 +27,9 @@ function CustomerFinishedJobs()
     };
 
     const [formData, setFormData] = useState({
-      price: "",
+      plumberId: "",
       description: "",
-      plumberId:"",
-      flag:""
+      rating:""
     });
 
     const apiurl = "https://plumbing.api.heptotechnologies.org/plumber/user/api/finished-customer-jobs";
@@ -81,9 +81,54 @@ function CustomerFinishedJobs()
       }
     }
 
-    
+    const skillAdd =(data) =>{
+      console.log(data);
+      setShow1(true);
+      setFormData({
+        plumberId: data.plumberId,
+        jobId: data.id
+      });
+    }   
 
 
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+     
+      try {  
+          const  data = {
+            plumberId: formData.plumberId,
+            jobId: formData.jobId,
+            rating: formData.rating,           
+           }
+        const headers = {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+        const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/add-skill";
+        const response = await axios.post(apiurl, data,{headers});
+  
+        if (response.status === 200) {
+        
+            toast.success(response.data.message, {
+              position: "top-right",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+              backgroundColor:'green'
+            }); 
+            setShow1(false);
+            finishedJobs();
+        } else {
+          console.error("Failed");
+        }
+      } catch (error) {
+        console.error("Error registering user:", error);
+      }
+    };
     return(
         <>
     <Dashnavbar/>
@@ -121,23 +166,24 @@ function CustomerFinishedJobs()
                     <th scope="col">Address</th>
                     <th scope="col">Description</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Action</th>                    
                   </tr>
                 </thead>
                 <tbody>
                 {finishedjobData.map((data, index) => (
-                    <tr>
+                    <tr key={data.id}>
                     <th scope="row">{index + 1 }</th>
                     <td>{data.customerName}</td>
                     <td>{data.address}</td>
                     <td>{data.description}</td>
                     <td>{data.fixedPrice}</td>
                     <td>
-                      {data.finished === 'false' ? (
+                      {data.finished ? (
                         <button className="btn btn-primary" onClick={() => finishForJobs(data.id)}>Verify</button>
                       ) : (
                         <button className="btn btn-success">Finished</button>
                       )}
+                      <button className="btn  btn-secondary" onClick={() =>skillAdd(data)}>Add Skill</button>
                     </td>
 
                     </tr>
@@ -150,6 +196,27 @@ function CustomerFinishedJobs()
       </div>
     </div>
  
+    <Modal show={show1} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={handleCloses1} centered>
+      <Modal.Body style={{ margin: '0', padding: '0' }}>
+        <div className="modalpad">
+          <h5>Rating:</h5>
+          <div className="mt-3">
+            <div className="row">
+            <div className="col-6">
+              <label className="mb-2">Rating Skill:</label>
+              <input type="text" name="rating" value={formData.rating} onChange={handleInputChange} className="form-control"></input>
+              {errors.rating && <div className="text-danger">{errors.rating}</div>}
+            </div>
+            </div>
+          </div>
+        
+          <div className="d-flex justify-content-end mt-3 align-items-center">
+            <button className="modalclose me-3" onClick={handleCloses1}>Cancel</button>
+            <button className="modalsave" onClick={handleSubmit}>Save</button>
+          </div>
+        </div>
+      </Modal.Body>
+    </Modal>
   </>
     ) 
 }

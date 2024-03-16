@@ -37,6 +37,12 @@ function CustomerSidebar() {
               Dashboard
             </Link>
           </li>
+          <li className={location.pathname === "/customer/profile" ? "active-link" : ""}>
+            <Link to="/customer/profile" className={location.pathname === "/customer/profile" ? "active-link" : ""}>
+              <i className={`fa fa-dashboard${location.pathname === "/customer/profile" ? " active-link" : ""}`} />
+              Profile
+            </Link>
+          </li>
           <li onClick={() => toggleDropdown("customers")} className={`dropdown ${activeDropdown === "customers" ? "active-link" : ""}`}>
             <div>
               <i className={`fa fa-users${activeDropdown === "customers" ? " active-link" : ""}`} />
