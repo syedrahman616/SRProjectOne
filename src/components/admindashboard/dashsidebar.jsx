@@ -15,13 +15,13 @@ function Sidebar() {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
-  //...logout...//
+  // //...logout...//
 
-  const logOut =() =>{
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("userRole");
-    navigate('/');
-  }
+  // const logOut =() =>{
+  //   localStorage.removeItem("accessToken");
+  //   localStorage.removeItem("userRole");
+  //   navigate('/');
+  // }
 
   return (
     <>
@@ -150,7 +150,7 @@ function Sidebar() {
               Review & Ratings
             </Link>
           </li>
-          <li
+          {/* <li
             className={location.pathname === "/loginpage" ? "active-link" : ""}  onClick={logOut}
           >
             
@@ -160,7 +160,7 @@ function Sidebar() {
                 }`}
               />
               Log Out
-          </li>
+          </li> */}
         </ul>
       </aside>
     </>

@@ -88,10 +88,10 @@ function PlumberSidebar() {
                Plumber Qutoes
             </Link>
           </li>
-          <li className={location.pathname === "/loginpage" ? "active-link" : ""} onClick={logOut}>
+          {/* <li className={location.pathname === "/loginpage" ? "active-link" : ""} onClick={logOut}>
               <i className={`fa fa-sign-out${location.pathname === "/loginpage" ? " active-link" : ""}`} />
               Log Out
-          </li>
+          </li> */}
  
          
         </ul>

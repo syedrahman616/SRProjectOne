@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 function Dashplumber() {
   const [show1, setShow1] = useState(false);
   const [viewshow, setviewShow] = useState(false);
+  const [editshow, seteditShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const [plumberId, setPlumberId] = useState(null);
   const [statusFilter, setStatusFilter] = useState("All"); 
@@ -66,6 +67,10 @@ function Dashplumber() {
 
   const viewClose = () => {
     setviewShow(false);
+  };
+
+  const editClose = () => {
+    seteditShow(false);
   };
 
   const admin_approve= (id) => {
@@ -140,6 +145,52 @@ function Dashplumber() {
 
   //end
 
+  // editSubmit
+  const editSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const data = {
+        id:formData.id,
+        plumberId:formData.plumberId,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        address: formData.address,
+        postCode: formData.postcode,
+        mobile: formData.mobile,
+        email: formData.email,
+        flag: 'edit',
+      };
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+      const apiurl="https://plumbing.api.heptotechnologies.org/plumber/user/api/admin-plumber-profile";
+      const response = await axios.post(apiurl, data,{headers});
+
+      console.log(response);
+      if (response.status === 200) {
+        seteditShow(false);
+        toast.success(response.data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          backgroundColor:'green'
+        }); 
+        plumberget();  
+      } else {
+        console.error("Registration failed");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
+  };
+
+
   //approve 
   const approveSubmit = async (e) => {
     e.preventDefault();
@@ -195,6 +246,22 @@ function Dashplumber() {
    });
   }
 
+  
+  const editPlumber=(plumber) =>{
+    console.log(plumber);
+    seteditShow(true);
+    setFormData({
+      id:plumber.id,
+      plumberId:plumber.plumberId,
+      firstName: plumber.firstName,
+      lastName: plumber.lastName,
+      address: plumber.address,
+      city: plumber.city,
+      mobile: plumber.mobile,
+      postcode: plumber.postCode,
+      email: plumber.userEmail,
+   });
+  }
   //...Delete Function...//
 
   const deletePlumber = async(id) => {
@@ -433,6 +500,48 @@ function Dashplumber() {
             <div className="mt-3">
               <label className="mb-2">Enter Postcode:</label>
               <input type="text" name="postcode"  value={formData.postcode} onChange={handleInputChange}className="form-control"></input>
+            </div>
+            <div className="d-flex justify-content-end mt-3 align-items-center">
+               <button className="modalclose me-3"  onClick={viewClose}>Cancel</button>
+            </div>
+           
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal show={editshow} dialogClassName="example-dialog26" contentClassName="example-content26" onHide={editClose} centered>
+        <Modal.Body style={{ margin: '0', padding: '0' }}>
+          <div className="modalpad">
+            <h5>Edit Plumber</h5>
+            <div className="mt-3">
+              <label className="mb-2">Enter Name:</label>
+              <input type="text" name="firstName" value={formData.firstName}  onChange={handleInputChange} className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter LastName:</label>
+              <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Email:</label>
+              <input type="text"  name="email" value={formData.email} onChange={handleInputChange} className="form-control"></input>
+            </div>
+        
+            <div className="mt-3">
+              <label className="mb-2">Enter Mobile Number:</label>
+              <input type="text" name="mobile" value={formData.mobile} onChange={handleInputChange}className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Address:</label>
+              <input type="text" name="address" value={formData.address} onChange={handleInputChange}
+               className="form-control"></input>
+            </div>
+            <div className="mt-3">
+              <label className="mb-2">Enter Postcode:</label>
+              <input type="text" name="postcode"  value={formData.postcode} onChange={handleInputChange}className="form-control"></input>
+            </div>
+            <div className="d-flex justify-content-end mt-3 align-items-center">
+               <button className="modalclose me-3"  onClick={editClose}>Cancel</button>
+               <button  className="modalsave" onClick={editSubmit}>Save</button>
             </div>
            
           </div>

@@ -15,13 +15,7 @@ function CustomerSidebar() {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
-  //...logout...//
-
-  const logOut =() =>{
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("userRole");
-    navigate('/');
-  }
+  
 
   return (
     <>
@@ -78,10 +72,10 @@ function CustomerSidebar() {
               </li>
             </>
           )}
-          <li className={location.pathname === "#" ? "active-link" : ""} onClick={logOut}>
+          {/* <li className={location.pathname === "#" ? "active-link" : ""} onClick={logOut}>
               <i className={`fa fa-sign-out${location.pathname === "#" ? " active-link" : ""}`} />
               Logout
-          </li>
+          </li> */}
         </ul>
       </aside>
     </>

@@ -136,8 +136,8 @@ function DashPlumberJobs() {
                         <td>{jobs.address}</td>
                         <td>{jobs.jobTitle}</td>
                         <td>{jobs.description}</td>
-                        <td>{jobs.customerStartDate}</td>
-                        <td>{jobs.customerEndDate}</td>
+                        <td>{jobs.startDate}</td>
+                        <td>{jobs.endDate}</td>
                         <td>{jobs.fixedPrice}</td>
                       </tr>
                     ))}

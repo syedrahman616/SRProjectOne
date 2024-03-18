@@ -42,6 +42,7 @@ function Dashcustomerjobs() {
       const response = await axios.get(apiurl,{headers});
       if(response.status===200){
         setAdminJobs(response.data.data); 
+        console.log('jobs',response.data.data)
       }
     }catch(error){
         console.log(error);
@@ -105,8 +106,8 @@ function Dashcustomerjobs() {
                   {adminJobs.map((job, index) => (
 
                       <tr>
-                        <th scope="row"></th>
-                        <td></td>
+                        <th scope="row">{index + 1}</th>
+                        <td>{job.customerName}</td>
                         <td>{job.address}</td>
                         <td>{job.jobTitle}</td>
                         <td>{job.description}</td>
