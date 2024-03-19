@@ -173,16 +173,8 @@ function Login() {
                   <span className="input-icon d-flex jusify-content-center align-items-center ">
                     <i className="fa fa-lock ml-2"></i>
                   </span>
-                  {/* <input
-                    type="password"
-                    className="form-control logininput"
-                    placeholder="Enter your password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                  /> */}
-
-                  <div style={{ position: "relative", width: "95%" }}>
+                 
+                  <div style={{ position: "relative", width: "93%" }}>
                      <input type={showPasswords ? 'text' : 'password'} className="form-control logininput" id="userpassword"
                            placeholder="Password" name="password" value={formData.password} onChange={handleInputChange} />
                       <p className="toggle-passwords" onClick={togglePasswordVisibilitys} style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
