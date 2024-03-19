@@ -22,7 +22,6 @@ import Cusotmerjobs from "./components/Customerdashboard/customerjobs";
 import Customerplumber from "./components/Customerdashboard/customerplumber";
 import AllJobs from "./components/plumberdashboard/allJobs";
 import Plumber from "./components/Customerdashboard/plumber";
-// import Design from "./components/design/sidebar";
 import Quotes from "./components/plumberdashboard/plumberQutoes";
 import Finishedjobs from "./components/plumberdashboard/finishedJobs";
 import CustomerFinishedJobs from "./components/Customerdashboard/finishedJobs";
@@ -30,7 +29,6 @@ import { ToastContainer } from "react-toastify";
 import AdminQuotes from "./components/admindashboard/adminQuotes";
 import CustomerQuotes from "./components/Customerdashboard/customerQuotes";
 import CustomerProfile from "./components/Customerdashboard/customerProfile";
-import Evseller from "./components/test/evseller";
 
 
 
@@ -62,14 +60,12 @@ function App() {
           <Route path="/plumber/invitejobs" element={<PlumberJobs/>}/> 
           <Route path="/plumber/alljobs" element={<AllJobs/>}/>
           <Route path="/customer/plumber" element={<Plumber />} />
-          {/* <Route path="/design" element={<Design/>}/> */}
           <Route path="/check" element={<Quotes />} />
           <Route path="/plumber/finishedjobs" element={<Finishedjobs />} />
           <Route path="/customer/finishedjobs" element={<CustomerFinishedJobs />}/>
           <Route path="/customer/quotes" element={<CustomerQuotes />} />
           <Route path="/admin/quotes" element={<AdminQuotes/>} />
           <Route path="/customer/profile" element={<CustomerProfile />} />
-          {/* <Route path="/evseller" element={<Evseller />} /> */}
       </Routes>
     </Router>
     </>
